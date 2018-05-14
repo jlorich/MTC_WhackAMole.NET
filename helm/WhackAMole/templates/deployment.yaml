@@ -11,7 +11,7 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "MoleWhackAMoleCloud.name" . }}
+      app: {{ template "WhackAMole.name" . }}
       release: {{ .Release.Name }}
   template:
     metadata:
