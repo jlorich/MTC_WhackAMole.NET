@@ -1,9 +1,19 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-molecloud
+  name: {{ .Release.Name }}-deployment
 spec:
   replicas: 3
   selector:
-    matchlabels:
+    matchLabels:
       app: molecloud
+  template:
+    metadata:
+      labels:
+        app: molecloud
+    spec:
+      containers:
+      - name: molecloud
+        image: {{.Values.image.repository}}:{{.Values.image.tag}}
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
