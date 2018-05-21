@@ -1,6 +1,6 @@
 FROM microsoft/aspnetcore:2.0.0-jessie
 ARG source
 WORKDIR /app
-EXPOSE 80
-COPY ${source:-bin/Release/netcoreapp2.0/publish} .
-ENTRYPOINT ["dotnet", "WhackAMole.MoleCloud.dll"]
+EXPOSE 8080
+COPY ${source:-bin/Debug/netcoreapp2.0/publish} .
+ENTRYPOINT ["dotnet", "WhackAMole.MoleCloud.dll", "--urls", "http://*:8080"]

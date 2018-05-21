@@ -15,5 +15,9 @@ spec:
       containers:
       - name: molecloud
         image: {{.Values.image.repository}}:{{.Values.image.tag}}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+          protocol: TCP
       restartPolicy: Always
       terminationGracePeriodSeconds: 30

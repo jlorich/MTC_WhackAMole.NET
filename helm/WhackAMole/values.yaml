@@ -1,5 +1,5 @@
 image:
-  repository: VALUE_TO_BE_OVERRIDDEN
+  repository: microsoft/mtc_whackamole.net
   tag: latest
 
 # service:
