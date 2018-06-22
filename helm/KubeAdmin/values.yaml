@@ -1,6 +1,8 @@
 image:
-  repository: microsoft/mtc_whackamole.net
+  repository: microsoft/mtc_whackamole.net/kubeadmin
   tag: latest
+app:
+  name: KubeAdmin
 
 # service:
 #   type: LoadBalancer

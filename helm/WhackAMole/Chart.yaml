@@ -1,4 +1,0 @@
-appVersion: "1.0"
-description: A Helm chart for MTC_WhackAMole.NET
-name: WhackAMole
-version: 0.0.1

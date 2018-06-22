@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ .Release.Name }}-ingress
+  name: {{ .Release.Name }}
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
@@ -10,5 +10,5 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: {{ .Release.Name }}-service
+          serviceName: {{ .Release.Name }}
           servicePort: 8080
