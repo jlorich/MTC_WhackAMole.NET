@@ -1,5 +1,0 @@
-image:
-  repository: microsoft/mtc_whackamole.net/molecloud
-  tag: latest
-app:
-  name: MoleCloud
