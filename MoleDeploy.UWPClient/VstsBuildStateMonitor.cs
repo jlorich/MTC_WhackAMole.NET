@@ -58,6 +58,11 @@ namespace MoleDeploy.UWPClient
                 OnStateEnd(this, state);
             }
 
+            if (message?.State == null)
+            {
+                return;
+            }
+
             state = message.State;
 
             OnStateBegin(this, message.State);
