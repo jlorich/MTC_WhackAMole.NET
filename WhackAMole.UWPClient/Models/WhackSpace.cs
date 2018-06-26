@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -105,12 +107,24 @@ namespace WhackAMole.UWPClient.Models
             Height = height;
 
             _movementEngine = new BaseMovementEngine(Width, Height,MOLE_SIZE);
-            var moleEndpoint = ApplicationData.Current.LocalSettings.Values["moleServiceEndpoint"] as string;
-            var adminEndpoint = ApplicationData.Current.LocalSettings.Values["adminServiceEndpoint"] as string;
-          
+
+            string moleEndpoint = "";
+            string adminEndpoint = "";
+
+            if (!File.Exists("appSettings.json")) {
+                var data = File.ReadAllText("appSettings.json");
+                var settings = JsonConvert.DeserializeAnonymousType(data, new { MoleEndpoint = "", AdminEndpoint = "" });
+
+                moleEndpoint = settings.MoleEndpoint;
+                adminEndpoint = settings.AdminEndpoint;
+            } else {
+                moleEndpoint = ApplicationData.Current.LocalSettings.Values["moleServiceEndpoint"] as string;
+                adminEndpoint = ApplicationData.Current.LocalSettings.Values["adminServiceEndpoint"] as string;
+            }
+
             MoleService.Create(moleEndpoint);
-           
             AdminService.Create(adminEndpoint);
+
             _moleService = MoleService.Instance;
             _adminService = AdminService.Instance;
         }

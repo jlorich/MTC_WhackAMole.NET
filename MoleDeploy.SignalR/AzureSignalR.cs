@@ -12,9 +12,9 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MoleDeploy.UWPClient
+namespace MoleDeploy.SignalR
 {
-    class AzureSignalR
+    public class AzureSignalR
     {
         class PayloadMessage
         {
@@ -80,7 +80,7 @@ namespace MoleDeploy.UWPClient
             ParseConnectionString(connectionString, out endpoint, out accessKey);
         }
 
-        public async Task SendAsync(string hubName, string methodName, params object[] args)
+        public async Task<HttpResponseMessage> SendAsync(string hubName, string methodName, params object[] args)
         {
             var payload = new PayloadMessage()
             {
@@ -89,7 +89,7 @@ namespace MoleDeploy.UWPClient
             };
             var url = $"{endpoint}:5002/api/v1-preview/hub/{hubName}";
             var bearer = GenerateJwtBearer(null, url, null, DateTime.UtcNow.AddMinutes(30), accessKey);
-            await PostJsonAsync(url, payload, bearer);
+            return await PostJsonAsync(url, payload, bearer);
         }
 
         public string GetClientHubUrl(string hubName)
