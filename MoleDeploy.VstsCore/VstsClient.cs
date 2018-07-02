@@ -31,7 +31,7 @@ namespace MoleDeploy.Vsts {
             return status.ToString();
         }
 
-        public async Task SubmitNewBuild(string project, int definitionId, string args)
+        public async Task SubmitNewBuild(string project, int definitionId, string parameters)
         {
             var buildClient = _Connection.GetClient<BuildHttpClient>();
             var releaseClient = _Connection.GetClient<ReleaseHttpClient>();
@@ -44,7 +44,8 @@ namespace MoleDeploy.Vsts {
                 {
                     Id = definition.Id
                 },
-                Project = definition.Project
+                Project = definition.Project,
+                Parameters = parameters
             });
         }
         

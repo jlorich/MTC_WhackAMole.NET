@@ -28,11 +28,11 @@ namespace MoleDeploy.Vsts.Functions
             var projectName = config["Vsts:ProjectName"];
             var definitionId = int.Parse(config["Vsts:BuildId"]);
             var accessToken = config["Vsts:AccessToken"];
-            var args = $"--color={color}";
+            var parameters = $"pod_color={color}";
 
             var client = new VstsClient(collection, accessToken);
 
-            await client.SubmitNewBuild(projectName, definitionId, args);
+            await client.SubmitNewBuild(projectName, definitionId, parameters);
 
             return new HttpResponseMessage(HttpStatusCode.Created);
         }

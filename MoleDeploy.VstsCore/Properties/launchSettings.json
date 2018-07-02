@@ -1,10 +1,7 @@
 {
   "profiles": {
     "MoleDeploy.VstsCore": {
-      "commandName": "Project",
-      "environmentVariables": {
-        "Vsts__Collection": "https://mtcdenver.visualstudio.com/DefaultCollection"
-      }
+      "commandName": "Project"
     }
   }
 }

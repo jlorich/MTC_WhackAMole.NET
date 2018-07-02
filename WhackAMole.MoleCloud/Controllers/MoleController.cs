@@ -17,7 +17,7 @@ namespace WhackAMole.MoleCloud.Controllers
         private int _count = START;
 
         //private const string HEX_COLOR = "FF691E"; //ORANGEISH
-        private const string HEX_COLOR = "7FC9FF"; //BLUEISH
+        //private const string HEX_COLOR = "7FC9FF"; //BLUEISH
         //private const string HEX_COLOR = "00FF21"; //GREENISH
 
 
@@ -26,10 +26,11 @@ namespace WhackAMole.MoleCloud.Controllers
         {
             var pod = Environment.GetEnvironmentVariable("POD_NAME");
             var host = Environment.GetEnvironmentVariable("NODE_NAME");
+            var color = Environment.GetEnvironmentVariable("POD_COLOR");
             var rnd = new Random();
             var c = (char)rnd.Next(START, END);
             var character = c.ToString();
-            var mole = new MoleState() { Name = $"{pod}", CurrentChar = character, Color = HEX_COLOR};
+            var mole = new MoleState() { Name = $"{pod}", CurrentChar = character, Color = color };
             
 
             return new OkObjectResult(mole);
