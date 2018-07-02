@@ -18,6 +18,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Animation;
 using MoleDeploy.Contracts;
+using System.Net.Http;
+using MoleDeploy.Vsts;
+using Newtonsoft.Json;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -80,7 +83,8 @@ namespace MoleDeploy.UWPClient
 
         }
 
-        private async Task Rotate(UIElement element, CancellationToken cancellationToken) {
+        private async Task Rotate(UIElement element, CancellationToken cancellationToken)
+        {
             Storyboard storyboard = new Storyboard();
 
             cancellationToken.Register(async () =>
@@ -118,6 +122,48 @@ namespace MoleDeploy.UWPClient
             };
 
             return rotateAnimation;
+        }
+
+        private void button_deployRed_Click(object sender, RoutedEventArgs e)
+        {
+            Task.Run(async () =>
+            {
+                await SubmitBuild("red");
+            });
+        }
+
+        private void button_deployOrange_Click(object sender, RoutedEventArgs e)
+        {
+            Task.Run(async () =>
+            {
+                await SubmitBuild("orange");
+            });
+        }
+
+        private void button_deployPurple_Click(object sender, RoutedEventArgs e)
+        {
+            Task.Run(async () =>
+            {
+                await SubmitBuild("purple");
+            });
+        }
+
+        private async Task SubmitBuild(string color)
+        {
+            var url = "https://mtcden-sandbox-demo-whack-a-mole-vsts-func.azurewebsites.net/api/SubmitBuild";
+
+            var request = new SubmitBuildRequest()
+            {
+                Color = color
+            };
+
+            var body = JsonConvert.SerializeObject(request);
+            var client = new HttpClient();
+            var content = new StringContent(body);
+            client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json; charset=utf-8");
+
+            var result = await client.PostAsync(url, content);
+            var resultBody = result.Content.ReadAsStringAsync();
         }
     }
 }

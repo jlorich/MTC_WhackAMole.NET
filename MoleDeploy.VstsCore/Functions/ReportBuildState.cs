@@ -9,7 +9,7 @@ using MoleDeploy.Contracts;
 using MoleDeploy.SignalR;
 using Newtonsoft.Json;
 
-namespace MoleDeploy.Vsts
+namespace MoleDeploy.Vsts.Functions
 {
     public static class ReportBuildState
     {

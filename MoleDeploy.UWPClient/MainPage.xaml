@@ -81,19 +81,19 @@
             </RelativePanel>
         </Grid>
         <RelativePanel HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="#ffffff" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignBottomWithPanel="True" Margin="0,0,0,12" Height="200">
-            <Button Background="#FFD62D1A" Height="175" Width="175" HorizontalAlignment="Center" HorizontalContentAlignment="Center" RelativePanel.AlignVerticalCenterWithPanel="True" FontFamily="Segoe UI" Padding="0,0,0,0" RelativePanel.LeftOf="button_deployOrange" Margin="0,0,24,0">
+            <Button Name="button_deployRed" Background="#FFD62D1A" Height="175" Width="175" HorizontalAlignment="Center" HorizontalContentAlignment="Center" RelativePanel.AlignVerticalCenterWithPanel="True" FontFamily="Segoe UI" Padding="0,0,0,0" RelativePanel.LeftOf="button_deployOrange" Margin="0,0,24,0" Click="button_deployRed_Click">
                 <RelativePanel HorizontalAlignment="Left" Width="125" Height="125" VerticalAlignment="Top">
                     <Image HorizontalAlignment="Center" Height="65" VerticalAlignment="Top" Source="Assets/cloud.png" Width="65" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignBottomWithPanel="True" Margin="0,0,0,6"/>
                     <TextBlock FontFamily="Segoe UI" FontWeight="Bold" FocusVisualPrimaryBrush="Black" Foreground="White" Margin="0,6,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Center" FontSize="14" RelativePanel.AlignHorizontalCenterWithPanel="True" ><Run Text="Deploy Red"/><LineBreak/><Run Text="Containers"/></TextBlock>
                 </RelativePanel>
             </Button>
-            <Button Name="button_deployOrange" Background="#FFFA8B37" Height="175" Width="175" HorizontalAlignment="Center" HorizontalContentAlignment="Center" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" FontFamily="Segoe UI" Padding="0,0,0,0">
+            <Button Name="button_deployOrange" Background="#FFFA8B37" Height="175" Width="175" HorizontalAlignment="Center" HorizontalContentAlignment="Center" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" FontFamily="Segoe UI" Padding="0,0,0,0" Click="button_deployOrange_Click">
                 <RelativePanel HorizontalAlignment="Stretch" Width="125" Height="125" VerticalAlignment="Stretch">
                     <Image HorizontalAlignment="Center" Height="65" VerticalAlignment="Top" Source="Assets/cloud.png" Width="65" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignBottomWithPanel="True" Margin="0,0,0,6"/>
                     <TextBlock FontFamily="Segoe UI" FontWeight="Bold" FocusVisualPrimaryBrush="Black" Foreground="White" Margin="0,6,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Center" FontSize="14" RelativePanel.AlignHorizontalCenterWithPanel="True" ><Run Text="Deploy Orange"/><LineBreak/><Run Text="Containers"/></TextBlock>
                 </RelativePanel>
             </Button>
-            <Button Background="#FF531868" Height="175" Width="175" HorizontalAlignment="Center" HorizontalContentAlignment="Center" RelativePanel.AlignVerticalCenterWithPanel="True" FontFamily="Segoe UI" Padding="0,0,0,0" RelativePanel.RightOf="button_deployOrange" Margin="24,0,0,0">
+            <Button Name="button_deployPurple" Background="#FF531868" Height="175" Width="175" HorizontalAlignment="Center" HorizontalContentAlignment="Center" RelativePanel.AlignVerticalCenterWithPanel="True" FontFamily="Segoe UI" Padding="0,0,0,0" RelativePanel.RightOf="button_deployOrange" Margin="24,0,0,0" Click="button_deployPurple_Click">
                 <RelativePanel HorizontalAlignment="Stretch" Width="125" Height="125" VerticalAlignment="Stretch">
                     <Image HorizontalAlignment="Center" Height="65" VerticalAlignment="Top" Source="Assets/cloud.png" Width="65" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignBottomWithPanel="True" Margin="0,0,0,6"/>
                     <TextBlock FontFamily="Segoe UI" FontWeight="Bold" FocusVisualPrimaryBrush="Black" Foreground="White" Margin="0,6,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Center" FontSize="14" RelativePanel.AlignHorizontalCenterWithPanel="True" ><Run Text="Deploy Purple"/><LineBreak/><Run Text="Containers"/></TextBlock>
