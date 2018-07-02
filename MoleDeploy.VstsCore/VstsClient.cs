@@ -38,15 +38,19 @@ namespace MoleDeploy.Vsts {
 
             var definition = await buildClient.GetDefinitionAsync(project, definitionId);
 
-            await buildClient.QueueBuildAsync(new Build
+            var build = new Build
             {
-                 Definition = new DefinitionReference
+                Definition = new DefinitionReference
                 {
                     Id = definition.Id
                 },
                 Project = definition.Project,
                 Parameters = parameters
-            });
+            };
+
+           // build.Properties.Add("pod_color", parameters);
+
+            await buildClient.QueueBuildAsync(build);
         }
         
     }
