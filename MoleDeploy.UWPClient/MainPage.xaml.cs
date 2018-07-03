@@ -128,7 +128,7 @@ namespace MoleDeploy.UWPClient
         {
             Task.Run(async () =>
             {
-                await SubmitBuild("red");
+                await SubmitBuild("FFD62D1A");
             });
         }
 
@@ -136,7 +136,7 @@ namespace MoleDeploy.UWPClient
         {
             Task.Run(async () =>
             {
-                await SubmitBuild("orange");
+                await SubmitBuild("FFFA8B37");
             });
         }
 
@@ -144,7 +144,7 @@ namespace MoleDeploy.UWPClient
         {
             Task.Run(async () =>
             {
-                await SubmitBuild("purple");
+                await SubmitBuild("FF531868");
             });
         }
 

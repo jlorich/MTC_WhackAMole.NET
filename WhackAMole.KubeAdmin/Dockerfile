@@ -1,6 +1,5 @@
 FROM microsoft/aspnetcore:2.0.0-jessie
-ARG source
 WORKDIR /app
-EXPOSE 80
+EXPOSE 8080
 COPY ./obj/Docker/publish .
-ENTRYPOINT ["dotnet", "WhackAMole.KubeAdmin.dll", "--urls", "http://*:80"]
+ENTRYPOINT ["dotnet", "WhackAMole.KubeAdmin.dll", "--urls", "http://*:8080"]

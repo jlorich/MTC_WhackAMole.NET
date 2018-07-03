@@ -10,7 +10,7 @@ spec:
   rules:
   - http:
       paths:
-      - path: /admin/
+      - path: /admin
         backend:
           serviceName: {{ .Release.Name }}
-          servicePort: 80
+          servicePort: 8080

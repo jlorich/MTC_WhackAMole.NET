@@ -67,12 +67,7 @@ namespace WhackAMole.UWPClient
                     // When the navigation stack isn't restored navigate to the first page,
                     // configuring the new page by passing required information as a navigation
                     // parameter
-                    var moleEndpoint = ApplicationData.Current.LocalSettings.Values["moleServiceEndpoint"] as string;
-                    var adminEndpoint = ApplicationData.Current.LocalSettings.Values["adminServiceEndpoint"] as string;
-                    if (moleEndpoint == null || adminEndpoint == null)
-                        rootFrame.Navigate(typeof(FirstTime));
-                    else
-                        rootFrame.Navigate(typeof(Start), e.Arguments);
+                    rootFrame.Navigate(typeof(Start), e.Arguments);
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();

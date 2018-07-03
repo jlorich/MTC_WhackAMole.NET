@@ -36,9 +36,6 @@ namespace WhackAMole.UWPClient
         private WhackSpace _whackSpace;
         private Dictionary<string, string> _moleMap = new Dictionary<string, string>();
         
-
-
-
         public MainPage()
         {
             this.InitializeComponent();
@@ -73,20 +70,11 @@ namespace WhackAMole.UWPClient
             };
         }
 
-
-
-    
-
         private async Task Start()
         {
             Debug.WriteLine("starting");
             await _whackSpace.SetupAsync(MolePen);
             _whackSpace.Start();
         }
-
-
-
-
-
     }
 }

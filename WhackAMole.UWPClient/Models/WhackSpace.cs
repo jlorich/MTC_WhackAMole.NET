@@ -110,23 +110,34 @@ namespace WhackAMole.UWPClient.Models
 
             string moleEndpoint = "";
             string adminEndpoint = "";
+            var packageFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
 
-            if (!File.Exists("appSettings.json")) {
-                var data = File.ReadAllText("appSettings.json");
-                var settings = JsonConvert.DeserializeAnonymousType(data, new { MoleEndpoint = "", AdminEndpoint = "" });
 
-                moleEndpoint = settings.MoleEndpoint;
-                adminEndpoint = settings.AdminEndpoint;
-            } else {
-                moleEndpoint = ApplicationData.Current.LocalSettings.Values["moleServiceEndpoint"] as string;
-                adminEndpoint = ApplicationData.Current.LocalSettings.Values["adminServiceEndpoint"] as string;
-            }
+            var file = packageFolder.GetFileAsync("appSettings.json").GetAwaiter().GetResult() ;
+            var data = FileIO.ReadTextAsync(file).GetAwaiter().GetResult();
+            var settings = JsonConvert.DeserializeAnonymousType(data, new { MoleEndpoint = "", AdminEndpoint = "" });
+            moleEndpoint = settings.MoleEndpoint;
+            adminEndpoint = settings.AdminEndpoint;
 
             MoleService.Create(moleEndpoint);
             AdminService.Create(adminEndpoint);
 
             _moleService = MoleService.Instance;
             _adminService = AdminService.Instance;
+            
+            //var sampleFile = 
+            
+
+            //if (!File.Exists("appSettings.json")) {
+            //    var data = File.ReadAllText("appSettings.json");
+            //    var settings = JsonConvert.DeserializeAnonymousType(data, new { MoleEndpoint = "", AdminEndpoint = "" });
+
+            //    moleEndpoint = settings.MoleEndpoint;
+            //    adminEndpoint = settings.AdminEndpoint;
+            //} else {
+            //    moleEndpoint = ApplicationData.Current.LocalSettings.Values["moleServiceEndpoint"] as string;
+            //    adminEndpoint = ApplicationData.Current.LocalSettings.Values["adminServiceEndpoint"] as string;
+            //}
         }
 
         public async Task SetupAsync(Canvas molepen)
