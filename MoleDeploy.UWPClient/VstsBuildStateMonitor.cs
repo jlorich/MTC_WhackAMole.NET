@@ -16,35 +16,31 @@ namespace MoleDeploy.UWPClient
         public event BuildStateChangeHandler OnStateBegin;
         public event BuildStateChangeHandler OnStateEnd;
 
-        private readonly string _Endpoint;
-        private readonly string _AccessKey;
-
         private VstsBuildState state;
+
+        private HubConnection _Connection;
 
         public VstsBuildStateMonitor(string endpoint, string accessKey)
         {
-            _Endpoint = endpoint;
-            _AccessKey = accessKey;
-        }
-
-        public async Task ConnectToHubAsync()
-        {
-            var signalR = new AzureSignalR($"Endpoint={_Endpoint};AccessKey={_AccessKey}");
+            var signalR = new AzureSignalR($"Endpoint={endpoint};AccessKey={accessKey}");
             var hubUrl = signalR.GetClientHubUrl("Status");
             var token = signalR.GenerateAccessToken("Status");
 
-            var connection = new HubConnectionBuilder()
+            _Connection = new HubConnectionBuilder()
             .WithUrl(hubUrl, options => {
                 options.Headers = new Dictionary<string, string> { { "Authorization", string.Format("bearer {0}", token) } };
             })
             .Build();
 
-            connection.On<VstsBuildStateChangeNotification>("StatusChanged", (noticifation) =>
+            _Connection.On<VstsBuildStateChangeNotification>("StatusChanged", (noticifation) =>
             {
                 ProcessStateChangeNotification(noticifation);
             });
+        }
 
-            await connection.StartAsync();
+        public Task ConnectToHubAsync()
+        {
+            return _Connection.StartAsync();
         }
 
         private void ProcessStateChangeNotification(VstsBuildStateChangeNotification message) {

@@ -68,7 +68,7 @@ namespace MoleDeploy.UWPClient
             buildStateMonitor.OnStateEnd += OnStateEnd;
 
             // Connect SinglaR Hub
-            Task.Run(() => buildStateMonitor.ConnectToHubAsync());
+            Task.Run(async () => await buildStateMonitor.ConnectToHubAsync());
         }
 
         private UIElement GetElementForState(VstsBuildState state)
