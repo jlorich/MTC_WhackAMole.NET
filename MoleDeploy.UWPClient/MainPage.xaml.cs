@@ -21,6 +21,7 @@ using MoleDeploy.Contracts;
 using System.Net.Http;
 using MoleDeploy.Vsts;
 using Newtonsoft.Json;
+using System.Text;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -34,13 +35,38 @@ namespace MoleDeploy.UWPClient
         private CancellationTokenSource animationCancellationTokenSource;
         private VstsBuildStateMonitor buildStateManager;
 
+        private const string SETTINGS_FILE_LOCATION = "appsettings.json";
+        private DeployClientSettings _Settings;
+
+        private DeployClientSettings Settings
+        {
+            get
+            {
+                if (_Settings != null)
+                {
+                    return _Settings;
+                }
+
+                var packageFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
+                var file = packageFolder.GetFileAsync(SETTINGS_FILE_LOCATION).GetAwaiter().GetResult();
+                var data = FileIO.ReadTextAsync(file).GetAwaiter().GetResult();
+                _Settings = JsonConvert.DeserializeObject<DeployClientSettings>(data);
+
+                return _Settings;
+            }
+        }
+
         public MainPage()
         {
             this.InitializeComponent();
+        }
 
-            buildStateManager = new VstsBuildStateMonitor();
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            buildStateManager = new VstsBuildStateMonitor(Settings.SignalREndpoint, Settings.SignalRAccessKey);
             buildStateManager.OnStateBegin += OnStateBegin;
             buildStateManager.OnStateEnd += OnStateEnd;
+            buildStateManager.InitilizeHubAsync().GetAwaiter().GetResult();
         }
 
         private UIElement GetElementForState(VstsBuildState state)
@@ -128,7 +154,7 @@ namespace MoleDeploy.UWPClient
         {
             Task.Run(async () =>
             {
-                await SubmitBuild("FFD62D1A");
+                await SubmitBuild("D62D1A");
             });
         }
 
@@ -136,7 +162,7 @@ namespace MoleDeploy.UWPClient
         {
             Task.Run(async () =>
             {
-                await SubmitBuild("FFFA8B37");
+                await SubmitBuild("FA8B37");
             });
         }
 
@@ -144,7 +170,7 @@ namespace MoleDeploy.UWPClient
         {
             Task.Run(async () =>
             {
-                await SubmitBuild("FF531868");
+                await SubmitBuild("531868");
             });
         }
 
@@ -159,8 +185,7 @@ namespace MoleDeploy.UWPClient
 
             var body = JsonConvert.SerializeObject(request);
             var client = new HttpClient();
-            var content = new StringContent(body);
-            client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json; charset=utf-8");
+            var content = new StringContent(body, Encoding.UTF8, "application/json");
 
             var result = await client.PostAsync(url, content);
             var resultBody = result.Content.ReadAsStringAsync();

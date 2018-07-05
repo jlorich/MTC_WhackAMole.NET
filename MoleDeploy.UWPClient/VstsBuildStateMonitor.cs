@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.SignalR.Client;
 using MoleDeploy.Contracts;
 using Newtonsoft.Json;
 using MoleDeploy.SignalR;
+using System.Threading.Tasks;
 
 namespace MoleDeploy.UWPClient
 {
@@ -15,19 +16,20 @@ namespace MoleDeploy.UWPClient
         public event BuildStateChangeHandler OnStateBegin;
         public event BuildStateChangeHandler OnStateEnd;
 
-        private const string endpoint = "https://mtcden-sandbox-demo-whack-a-mole.service.signalr.net";// ApplicationData.Current.LocalSettings.Values["moleServiceEndpoint"] as string;
-        private const string accessKey = "HBCBkIRl/CqVBMbG9VUzrQ4Cp9msXAVBKVPeCzpEkR0=";// ApplicationData.Current.LocalSettings.Values["moleServiceEndpoint"] as string;
+        private readonly string _Endpoint;
+        private readonly string _AccessKey;
 
         private VstsBuildState state;
 
-        public VstsBuildStateMonitor()
+        public VstsBuildStateMonitor(string endpoint, string accessKey)
         {
-            InitilizeHub(endpoint, accessKey);
+            _Endpoint = endpoint;
+            _AccessKey = accessKey;
         }
 
-        private async void InitilizeHub(string endpoint, string accessKey)
+        public async Task InitilizeHubAsync()
         {
-            var signalR = new AzureSignalR($"Endpoint={endpoint};AccessKey={accessKey}");
+            var signalR = new AzureSignalR($"Endpoint={_Endpoint};AccessKey={_AccessKey}");
             var hubUrl = signalR.GetClientHubUrl("Status");
             var token = signalR.GenerateAccessToken("Status");
 
@@ -42,14 +44,7 @@ namespace MoleDeploy.UWPClient
                 ProcessStateChangeNotification(noticifation);
             });
 
-            try
-            {
-                await connection.StartAsync();
-            }
-            catch (Exception ex)
-            {
-
-            }
+            await connection.StartAsync();
         }
 
         private void ProcessStateChangeNotification(VstsBuildStateChangeNotification message) {

@@ -106,6 +106,7 @@
     <Compile Include="Models\KubePod.cs" />
     <Compile Include="Models\Mole.cs" />
     <Compile Include="Models\MoleState.cs" />
+    <Compile Include="Models\WhackSettings.cs" />
     <Compile Include="Models\WhackSpace.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AdminService.cs" />
@@ -203,7 +204,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="appSettings.json">
+    <Content Include="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

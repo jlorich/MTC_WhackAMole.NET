@@ -27,10 +27,10 @@ namespace WhackAMole.UWPClient.Models
         private const int TICK_INTERVAL = 33;
         private const int MOLE_SPEED = 5;
         private readonly double MOLE_SIZE = 75;
-        private readonly TimeSpan _expired = TimeSpan.FromMinutes(2);
+        private readonly TimeSpan _expired = TimeSpan.FromMinutes(5);
         private DateTime _lastKill;
-        
-        SemaphoreSlim _semaphore = new SemaphoreSlim(1,1);
+
+        SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
         private readonly IMovementEngine _movementEngine;
         private readonly MoleService _moleService;
         private readonly AdminService _adminService;
@@ -56,7 +56,8 @@ namespace WhackAMole.UWPClient.Models
         public double Width
         {
             get { return _width; }
-            set {
+            set
+            {
                 if (_width == value)
                     return;
                 if (_width != 0)
@@ -70,7 +71,8 @@ namespace WhackAMole.UWPClient.Models
         public double Height
         {
             get { return _height; }
-            set {
+            set
+            {
                 if (_height == value)
                     return;
                 if (_height != 0)
@@ -99,52 +101,27 @@ namespace WhackAMole.UWPClient.Models
             }
         }
 
-     
-        public WhackSpace( double width, double height)
+
+        public WhackSpace(double width, double height, WhackSettings settings)
         {
-           
+
             Width = width;
             Height = height;
 
-            _movementEngine = new BaseMovementEngine(Width, Height,MOLE_SIZE);
+            _movementEngine = new BaseMovementEngine(Width, Height, MOLE_SIZE);
 
-            string moleEndpoint = "";
-            string adminEndpoint = "";
-            var packageFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
-
-
-            var file = packageFolder.GetFileAsync("appSettings.json").GetAwaiter().GetResult() ;
-            var data = FileIO.ReadTextAsync(file).GetAwaiter().GetResult();
-            var settings = JsonConvert.DeserializeAnonymousType(data, new { MoleEndpoint = "", AdminEndpoint = "" });
-            moleEndpoint = settings.MoleEndpoint;
-            adminEndpoint = settings.AdminEndpoint;
-
-            MoleService.Create(moleEndpoint);
-            AdminService.Create(adminEndpoint);
+            MoleService.Create(settings.MoleEndpoint);
+            AdminService.Create(settings.AdminEndpoint);
 
             _moleService = MoleService.Instance;
             _adminService = AdminService.Instance;
-            
-            //var sampleFile = 
-            
-
-            //if (!File.Exists("appSettings.json")) {
-            //    var data = File.ReadAllText("appSettings.json");
-            //    var settings = JsonConvert.DeserializeAnonymousType(data, new { MoleEndpoint = "", AdminEndpoint = "" });
-
-            //    moleEndpoint = settings.MoleEndpoint;
-            //    adminEndpoint = settings.AdminEndpoint;
-            //} else {
-            //    moleEndpoint = ApplicationData.Current.LocalSettings.Values["moleServiceEndpoint"] as string;
-            //    adminEndpoint = ApplicationData.Current.LocalSettings.Values["adminServiceEndpoint"] as string;
-            //}
         }
 
         public async Task SetupAsync(Canvas molepen)
         {
             _molepen = molepen;
             Reset();
-           
+
             await UpdateNodeListAsync();
 
             await UpdatePodListAsync();
@@ -158,7 +135,7 @@ namespace WhackAMole.UWPClient.Models
 
 
 
-        private  void _timer_Tick(object source)
+        private void _timer_Tick(object source)
         {
             _countdown += TICK_INTERVAL;
             foreach (var mole in Moles)
@@ -168,13 +145,13 @@ namespace WhackAMole.UWPClient.Models
                 mole.Vector = newMovement.Item2;
                 AlignDisplay(mole);
             }
-          
-                
+
+
 
             if (_countdown > 500)
             {
                 _countdown = 0;
-                if (_updateTask == null  || _updateTask.IsFaulted || _updateTask.IsCompleted)
+                if (_updateTask == null || _updateTask.IsFaulted || _updateTask.IsCompleted)
                 {
                     _updateTask = UpdatePodListAsync();
                     _countdown = 0;
@@ -230,10 +207,10 @@ namespace WhackAMole.UWPClient.Models
             if (newList == null || newList.Count == 0) return;
 
             var currentList = from m in Moles select new KubePod { Name = m.MoleName };
-           
+
 
             Debug.WriteLine("New Pods");
-            var newPods = newList.Except(currentList,new KubePodComparer());
+            var newPods = newList.Except(currentList, new KubePodComparer());
             foreach (var p in newPods)
             {
                 if (!_removedList.Contains(p.Name))
@@ -268,14 +245,14 @@ namespace WhackAMole.UWPClient.Models
 
         }
 
- 
+
         private async Task RefreshMoleState()
         {
             foreach (var m in Moles)
             {
                 await m.UpdateStateAsync();
             }
-         
+
         }
 
         private async Task<MoleControl> CreateMoleAsync(KubePod pod)
@@ -285,8 +262,8 @@ namespace WhackAMole.UWPClient.Models
                 MoleControl moleControl = null;
                 await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
-                    
-                
+
+
                     moleControl = new MoleControl();
                     _molemap.Add(pod.Name, moleControl);
                     moleControl.MoleName = pod.Name;
@@ -309,15 +286,16 @@ namespace WhackAMole.UWPClient.Models
 
                     _molepen.Children.Add(moleControl);
                 });
-           
+
                 await _semaphore.WaitAsync();
                 Debug.WriteLine($"+++Create mole {pod.Name}");
                 return moleControl;
             }
-            finally {
+            finally
+            {
                 _semaphore.Release();
             }
-            
+
         }
 
         private void RemoveMoleFromPen(MoleControl mole)
@@ -345,7 +323,7 @@ namespace WhackAMole.UWPClient.Models
             {
                 await RemoveMoleAsync(mole);
                 WhackCount++;
-                 
+
             }
             Debug.WriteLine($"### Pod Deleted - {mole.MoleName}");
             return result;

@@ -8,7 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using WhackAMole.KubeAdmin.Services;
+using WhackAMole.KubeServices;
+using WhackAMole.KubeServices.Providers;
 
 namespace WhackAMole.KubeAdmin
 {
@@ -31,6 +32,7 @@ namespace WhackAMole.KubeAdmin
         {
             services.AddMvc();
             services.AddTransient<IAuthenticationProvider, LocalServiceTokenProvider>();
+            services.Configure<KubeSettings>(Configuration.GetSection("Kube"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
