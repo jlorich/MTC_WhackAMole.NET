@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WhackAMole.KubeServices
 {
-    public class KubeSettings
+    public class KubeOptions
     {
         public string BaseApiUrl { get; set; }
 

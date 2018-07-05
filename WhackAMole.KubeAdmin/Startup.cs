@@ -32,7 +32,7 @@ namespace WhackAMole.KubeAdmin
         {
             services.AddMvc();
             services.AddTransient<IAuthenticationProvider, LocalServiceTokenProvider>();
-            services.Configure<KubeSettings>(Configuration.GetSection("Kube"));
+            services.Configure<KubeOptions>(Configuration.GetSection("Kube"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -27,7 +27,7 @@ namespace MoleDeploy.UWPClient
             _AccessKey = accessKey;
         }
 
-        public async Task InitilizeHubAsync()
+        public async Task ConnectToHubAsync()
         {
             var signalR = new AzureSignalR($"Endpoint={_Endpoint};AccessKey={_AccessKey}");
             var hubUrl = signalR.GetClientHubUrl("Status");

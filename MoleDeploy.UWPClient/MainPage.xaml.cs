@@ -33,7 +33,7 @@ namespace MoleDeploy.UWPClient
     public sealed partial class MainPage : Page
     {
         private CancellationTokenSource animationCancellationTokenSource;
-        private VstsBuildStateMonitor buildStateManager;
+        private VstsBuildStateMonitor buildStateMonitor;
 
         private const string SETTINGS_FILE_LOCATION = "appsettings.json";
         private DeployClientSettings _Settings;
@@ -63,10 +63,12 @@ namespace MoleDeploy.UWPClient
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            buildStateManager = new VstsBuildStateMonitor(Settings.SignalREndpoint, Settings.SignalRAccessKey);
-            buildStateManager.OnStateBegin += OnStateBegin;
-            buildStateManager.OnStateEnd += OnStateEnd;
-            buildStateManager.InitilizeHubAsync().GetAwaiter().GetResult();
+            buildStateMonitor = new VstsBuildStateMonitor(Settings.SignalREndpoint, Settings.SignalRAccessKey);
+            buildStateMonitor.OnStateBegin += OnStateBegin;
+            buildStateMonitor.OnStateEnd += OnStateEnd;
+
+            // Connect SinglaR Hub
+            Task.Run(() => buildStateMonitor.ConnectToHubAsync());
         }
 
         private UIElement GetElementForState(VstsBuildState state)

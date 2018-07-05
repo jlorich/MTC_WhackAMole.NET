@@ -10,7 +10,7 @@ namespace WhackAMole.KubeServices
 {
     public class NodesRequest : KubeBaseRequest<KubeNode>, INodesRequest
     {
-        public NodesRequest(IAuthenticationProvider auth, KubeSettings settings) : base(auth, settings)
+        public NodesRequest(IAuthenticationProvider auth, KubeOptions settings) : base(auth, settings)
         {
 
         }

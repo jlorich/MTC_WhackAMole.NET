@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using WhackAMole.KubeServices;
 using WhackAMole.KubeServices.Models;
 using WhackAMole.KubeServices.Providers;
@@ -18,10 +19,10 @@ namespace WhackAMole.KubeAdmin.Controllers
         private readonly IAuthenticationProvider _auth;
         private readonly PodsRequest _podsRequest;
 
-        public PodsController(IAuthenticationProvider authProvider, KubeSettings settings)
+        public PodsController(IAuthenticationProvider authProvider, IOptions<KubeOptions> options)
         {
             _auth = authProvider;
-            var k8s = new KubeRequestBuilder(_auth, settings);
+            var k8s = new KubeRequestBuilder(_auth, options.Value);
             _podsRequest = k8s.Create<PodsRequest>();
         }
         [HttpGet]

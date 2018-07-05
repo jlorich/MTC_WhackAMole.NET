@@ -11,9 +11,9 @@ namespace WhackAMole.KubeServices
     public class KubeRequestBuilder
     {
         private IAuthenticationProvider _auth;
-        KubeSettings _settings;
+        KubeOptions _settings;
 
-        public KubeRequestBuilder(IAuthenticationProvider auth, KubeSettings settings)
+        public KubeRequestBuilder(IAuthenticationProvider auth, KubeOptions settings)
         {
             _auth = auth;
             _settings = settings;

@@ -18,10 +18,10 @@ namespace WhackAMole.KubeServices
         const string API_VERSION = "api/v1";
 
         private readonly IAuthenticationProvider _auth;
-        private readonly KubeSettings _settings;
+        private readonly KubeOptions _settings;
 
 
-        public KubeBaseRequest(IAuthenticationProvider authProvider, KubeSettings settings)
+        public KubeBaseRequest(IAuthenticationProvider authProvider, KubeOptions settings)
         {
             _auth = authProvider;
             _settings = settings;

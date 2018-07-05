@@ -106,7 +106,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="appsettings.json" />
+    <Content Include="appsettings.json" />
     <None Include="MoleDeploy.UWPClient_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Net.Http;
+using Microsoft.Extensions.Options;
 
 namespace WhackAMole.KubeServices.Providers
 {
@@ -19,11 +20,11 @@ namespace WhackAMole.KubeServices.Providers
     public class LocalServiceTokenProvider : BaseAuthenticationProvider, IAuthenticationProvider
     {
         private readonly string _token;
-        private readonly KubeSettings _settings;
+        private readonly KubeOptions _options;
 
-        public LocalServiceTokenProvider(KubeSettings settings)
+        public LocalServiceTokenProvider(IOptions<KubeOptions> options)
         {
-            _settings = settings;
+            _options = options.Value;
             _token = GetToken();
         }
 
@@ -37,13 +38,13 @@ namespace WhackAMole.KubeServices.Providers
 
         private string GetToken()
         {
-            if (_settings.AccessToken != null)
-                return _settings.AccessToken;
+            if (_options.AccessToken != null)
+                return _options.AccessToken;
 
-            if (!File.Exists(_settings.AccessTokenPath))
+            if (!File.Exists(_options.AccessTokenPath))
                 throw new FileNotFoundException();
 
-            var token = File.ReadAllText(_settings.AccessTokenPath);
+            var token = File.ReadAllText(_options.AccessTokenPath);
 
             return token;
         }

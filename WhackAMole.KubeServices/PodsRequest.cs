@@ -10,7 +10,7 @@ namespace WhackAMole.KubeServices
 {
     public class PodsRequest : KubeBaseRequest<KubePod>, IPodsRequest 
     {
-        public PodsRequest(IAuthenticationProvider auth, KubeSettings settings) : base (auth, settings)
+        public PodsRequest(IAuthenticationProvider auth, KubeOptions settings) : base (auth, settings)
         {
 
         }
