@@ -22,6 +22,8 @@ using System.Net.Http;
 using MoleDeploy.Vsts;
 using Newtonsoft.Json;
 using System.Text;
+using System.Drawing;
+using Windows.UI.Xaml.Shapes;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -34,6 +36,11 @@ namespace MoleDeploy.UWPClient
     {
         private CancellationTokenSource animationCancellationTokenSource;
         private VstsBuildStateMonitor buildStateMonitor;
+
+        private Color STATE_COMPLETE_COLOR = Color.FromArgb(0xFF, 0x47, 0x8e, 0x53);
+        private Color STATE_ACTIVE_COLOR = Color.FromArgb(0xFF, 0x1D, 0xAD, 0xD8);
+        private Color STATE_INACTIVE_COLOR = Color.FromArgb(0xFF, 0xA0, 0xA0, 0xA0);
+        private double STATE_CLIP_DARKNESS_RATIO = .66;
 
         private const string SETTINGS_FILE_LOCATION = "appsettings.json";
         private DeployClientSettings _Settings;
@@ -71,7 +78,24 @@ namespace MoleDeploy.UWPClient
             Task.Run(async () => await buildStateMonitor.ConnectToHubAsync());
         }
 
-        private UIElement GetElementForState(VstsBuildState state)
+        private Shape GetElementForState(VstsBuildState state)
+        {
+            switch (state)
+            {
+                case VstsBuildState.BuildingApplication:
+                    return ellipse_Step1;
+                case VstsBuildState.PublishingContainer:
+                    return ellipse_Step2;
+                case VstsBuildState.UpgradingCluster:
+                    return ellipse_Step3;
+                case VstsBuildState.DeployComplete:
+                    return ellipse_Step4;
+                default:
+                    return null;
+            }
+        }
+
+        private Shape GetClipElementForState(VstsBuildState state)
         {
             switch (state)
             {
@@ -97,18 +121,28 @@ namespace MoleDeploy.UWPClient
 
             animationCancellationTokenSource = new CancellationTokenSource();
 
-            var element = GetElementForState(state);
+            var element = GetClipElementForState(state);
 
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
             {
+                if (state == VstsBuildState.DeployComplete)
+                {
+                    SetAllColors(STATE_COMPLETE_COLOR);
+                    return;
+                }
+
+                SetColor(state, STATE_ACTIVE_COLOR);
                 await Rotate(element, animationCancellationTokenSource.Token);
             });
 
         }
 
-        private void OnStateEnd(object sender, VstsBuildState state)
+        private async void OnStateEnd(object sender, VstsBuildState state)
         {
-
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
+                SetColor(state, STATE_COMPLETE_COLOR);
+            });
         }
 
         private async Task Rotate(UIElement element, CancellationToken cancellationToken)
@@ -152,6 +186,37 @@ namespace MoleDeploy.UWPClient
             return rotateAnimation;
         }
 
+        private void SetAllColors(Color color)
+        {
+            foreach (var state in Enum.GetValues(typeof(VstsBuildState)))
+            {
+                SetColor((VstsBuildState)state, color);
+            }
+        }
+
+        private void SetColor(VstsBuildState state, Color color)
+        {
+            var e = GetElementForState(state);
+            var c = GetClipElementForState(state);
+
+            if (e == null || c == null) return;
+
+            var darkColor = DarkenColor(color, STATE_CLIP_DARKNESS_RATIO);
+
+            var ewColor = Windows.UI.Color.FromArgb(color.A, color.R, color.G, color.B);
+            var cwColor = Windows.UI.Color.FromArgb(darkColor.A, darkColor.R, darkColor.G, darkColor.B);
+
+            e.Fill = new SolidColorBrush(ewColor);
+            c.Fill = new SolidColorBrush(cwColor);
+        }
+
+        private static Color DarkenColor(Color color, double darkenAmount)
+        {
+            HSLColor hslColor = new HSLColor(color);
+            hslColor.Luminosity *= darkenAmount; // 0 to 1
+            return hslColor;
+        }
+
         private void button_deployRed_Click(object sender, RoutedEventArgs e)
         {
             Task.Run(async () =>
@@ -178,6 +243,12 @@ namespace MoleDeploy.UWPClient
 
         private async Task SubmitBuild(string color)
         {
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
+                SetAllColors(STATE_INACTIVE_COLOR);
+                SetColor(VstsBuildState.BuildingApplication, STATE_ACTIVE_COLOR);
+            });
+
             var url = "https://mtcden-sandbox-demo-whack-a-mole-vsts-func.azurewebsites.net/api/SubmitBuild";
 
             var request = new SubmitBuildRequest()

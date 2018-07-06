@@ -27,7 +27,7 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <RelativePanel Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="6,0,0,0">
-                <Ellipse HorizontalAlignment="Center" Height="125" VerticalAlignment="Top" Width="125" Fill="#FF1DADD8" RenderTransformOrigin="0.5,0.5" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" />
+                <Ellipse Name="ellipse_Step1" HorizontalAlignment="Center" Height="125" VerticalAlignment="Top" Width="125" Fill="#FF1DADD8" RenderTransformOrigin="0.5,0.5" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" />
                 <Ellipse Name="ellipse_Step1Clip" HorizontalAlignment="Center" Height="125" VerticalAlignment="Center" Width="125" Fill="#FF0090C4" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,0,0,0">
                     <Ellipse.RenderTransform>
                         <CompositeTransform Rotation="240"/>
@@ -40,7 +40,7 @@
                 <Image HorizontalAlignment="Center" Height="82" VerticalAlignment="Top" Width="82" Source="Assets/multiple-cogs.png" Grid.Column="2" Margin="0,0,0,-3" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"/>
             </RelativePanel>
             <RelativePanel Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="6,0,0,0">
-                <Ellipse HorizontalAlignment="Center" Height="125" VerticalAlignment="Top" Width="125" Fill="#FF1DADD8" RenderTransformOrigin="0.5,0.5" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" />
+                <Ellipse Name="ellipse_Step2" HorizontalAlignment="Center" Height="125" VerticalAlignment="Top" Width="125" Fill="#FF1DADD8" RenderTransformOrigin="0.5,0.5" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" />
                 <Ellipse Name="ellipse_Step2Clip" HorizontalAlignment="Center" Height="125" VerticalAlignment="Center" Width="125" Fill="#FF0090C4" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,0,0,0">
                     <Ellipse.RenderTransform>
                         <CompositeTransform Rotation="240"/>
@@ -53,7 +53,7 @@
                 <Image HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="82" Source="Assets/docker.png" Grid.Column="2" Margin="7.6,25.6,0,0" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Stretch="Uniform"/>
             </RelativePanel>
             <RelativePanel Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="6,0,0,0">
-                <Ellipse HorizontalAlignment="Center" Height="125" VerticalAlignment="Top" Width="125" Fill="#FF1DADD8" RenderTransformOrigin="0.5,0.5" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" />
+                <Ellipse Name="ellipse_Step3" HorizontalAlignment="Center" Height="125" VerticalAlignment="Top" Width="125" Fill="#FF1DADD8" RenderTransformOrigin="0.5,0.5" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" />
                 <Ellipse Name="ellipse_Step3Clip" HorizontalAlignment="Center" Height="125" VerticalAlignment="Center" Width="125" Fill="#FF0090C4" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,0,0,0">
                     <Ellipse.RenderTransform>
                         <CompositeTransform Rotation="240"/>
@@ -67,7 +67,7 @@
                 <Image HorizontalAlignment="Center" Height="82" VerticalAlignment="Top" Width="82" Source="Assets/white-cog-md.png" Grid.Column="2" Margin="0,0,0,-3" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"/>
             </RelativePanel>
             <RelativePanel Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="6,0,0,0">
-                <Ellipse HorizontalAlignment="Center" Height="125" VerticalAlignment="Top" Width="125" Fill="#FF1DADD8" RenderTransformOrigin="0.5,0.5" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" />
+                <Ellipse Name="ellipse_Step4" HorizontalAlignment="Center" Height="125" VerticalAlignment="Top" Width="125" Fill="#FF1DADD8" RenderTransformOrigin="0.5,0.5" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" />
                 <Ellipse Name="ellipse_Step4Clip" HorizontalAlignment="Center" Height="125" VerticalAlignment="Center" Width="125" Fill="#FF0090C4" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,0,0,0">
                     <Ellipse.RenderTransform>
                         <CompositeTransform Rotation="-120"/>

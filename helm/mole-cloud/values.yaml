@@ -3,4 +3,4 @@ image:
   tag: latest
 app:
   name: mole-cloud
-  replicas: 12
+  replicas: 8

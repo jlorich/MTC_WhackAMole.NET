@@ -44,7 +44,7 @@ namespace MoleDeploy.UWPClient
         }
 
         private void ProcessStateChangeNotification(VstsBuildStateChangeNotification message) {
-            if (state != VstsBuildState.Unknown)
+            if (state != VstsBuildState.Unknown && state != VstsBuildState.DeployComplete)
             {
                 OnStateEnd(this, state);
             }
