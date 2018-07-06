@@ -1,4 +1,4 @@
-FROM microsoft/aspnetcore:2.0.0-jessie
+FROM microsoft/dotnet:2.1.1-aspnetcore-runtime-stretch-slim
 ARG pod_color=7FC9FF
 ENV POD_COLOR=$pod_color
 WORKDIR /app

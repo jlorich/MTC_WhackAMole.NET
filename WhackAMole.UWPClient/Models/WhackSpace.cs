@@ -213,7 +213,7 @@ namespace WhackAMole.UWPClient.Models
             var newPods = newList.Except(currentList, new KubePodComparer());
             foreach (var p in newPods)
             {
-                if (!_removedList.Contains(p.Name))
+                if (!_removedList.Contains(p.Name)) // && p.Phase != "Pending"
                 {
                     await CreateMoleAsync(p);
                     Debug.WriteLine($"\t{p.Name}");

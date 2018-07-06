@@ -1,4 +1,4 @@
-FROM microsoft/aspnetcore:2.0.0-jessie
+FROM microsoft/dotnet:2.1.1-aspnetcore-runtime-stretch-slim
 WORKDIR /app
 EXPOSE 8080
 COPY ./obj/Docker/publish .
