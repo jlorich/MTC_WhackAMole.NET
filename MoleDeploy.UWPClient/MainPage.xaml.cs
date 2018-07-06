@@ -253,7 +253,8 @@ namespace MoleDeploy.UWPClient
 
             var request = new SubmitBuildRequest()
             {
-                Color = color
+                Color = color,
+                ReplicaCount = (int)slider_ReplicaCount.Value
             };
 
             var body = JsonConvert.SerializeObject(request);

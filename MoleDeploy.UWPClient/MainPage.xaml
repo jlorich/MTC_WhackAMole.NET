@@ -12,11 +12,11 @@
 
     <RelativePanel HorizontalAlignment="Stretch">
         <Canvas HorizontalAlignment="Stretch" Height="222" VerticalAlignment="Center" Background="#FF0078D7" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True">
-            <Image Margin="0,0,0,0" Source="Assets/vstsbackground.png" Stretch="UniformToFill"/>
-            <Image Source="Assets/vstslogo.png" Width="700" Height="50" Canvas.Left="225" Canvas.Top="74"/>
-            <TextBlock HorizontalAlignment="Left" Height="50" Text="Container CI/CD with" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" FontSize="48" FontFamily="Segoe UI Light" RelativePanel.AlignLeftWithPanel="True" Width="500" Canvas.Left="55" Canvas.Top="16"/>
+            <Image Margin="0,0,0,0" Source="Assets/vstsbackground.png" Stretch="UniformToFill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="1503"/>
+            <Image Source="Assets/vstslogo.png" Width="700" Height="50" Canvas.Left="463" Canvas.Top="41" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <TextBlock HorizontalAlignment="Left" Height="50" Text="Azure Kubernetes Service CI/CD" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" FontSize="48" FontFamily="Segoe UI Light" RelativePanel.AlignLeftWithPanel="True" Width="708" Canvas.Left="410" Canvas.Top="89" TextAlignment="Center" Margin="0,0,0,0"/>
         </Canvas>
-        <Grid Height="200" Margin="24,-5,24,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True">
+        <Grid Height="350" Margin="24,-5,24,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -27,78 +27,81 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <RelativePanel Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="6,0,0,0">
-                <Ellipse Name="ellipse_Step1" HorizontalAlignment="Center" Height="125" VerticalAlignment="Top" Width="125" Fill="#FF1DADD8" RenderTransformOrigin="0.5,0.5" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" />
-                <Ellipse Name="ellipse_Step1Clip" HorizontalAlignment="Center" Height="125" VerticalAlignment="Center" Width="125" Fill="#FF0090C4" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,0,0,0">
+                <Ellipse Name="ellipse_Step1" HorizontalAlignment="Center" Height="200" VerticalAlignment="Top" Width="200" Fill="#FF1DADD8" RenderTransformOrigin="0.5,0.5" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" />
+                <Ellipse Name="ellipse_Step1Clip" HorizontalAlignment="Center" Height="200" VerticalAlignment="Center" Width="200" Fill="#FF0090C4" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,0,0,0">
                     <Ellipse.RenderTransform>
                         <CompositeTransform Rotation="240"/>
                     </Ellipse.RenderTransform>
                     <Ellipse.Clip>
-                        <RectangleGeometry Rect="0,0,50,330"/>
+                        <RectangleGeometry Rect="0,0,80,330"/>
                     </Ellipse.Clip>
                 </Ellipse>
-                <TextBlock HorizontalAlignment="Center" Text="Building App" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF606060" FocusVisualPrimaryBrush="#FF767575" FontSize="20" FontFamily="Segoe UI Light" Grid.Column="2" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
-                <Image HorizontalAlignment="Center" Height="82" VerticalAlignment="Top" Width="82" Source="Assets/multiple-cogs.png" Grid.Column="2" Margin="0,0,0,-3" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                <TextBlock HorizontalAlignment="Center" Text="Building App" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF606060" FocusVisualPrimaryBrush="#FF767575" FontSize="24" FontFamily="Segoe UI Light" Grid.Column="2" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True" FontWeight="Normal" Margin="0,0,0,15"/>
+                <Image HorizontalAlignment="Center" Height="100" VerticalAlignment="Top" Width="110" Source="Assets/multiple-cogs.png" Grid.Column="2" Margin="0,0,0,-3" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"/>
             </RelativePanel>
             <RelativePanel Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="6,0,0,0">
-                <Ellipse Name="ellipse_Step2" HorizontalAlignment="Center" Height="125" VerticalAlignment="Top" Width="125" Fill="#FF1DADD8" RenderTransformOrigin="0.5,0.5" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" />
-                <Ellipse Name="ellipse_Step2Clip" HorizontalAlignment="Center" Height="125" VerticalAlignment="Center" Width="125" Fill="#FF0090C4" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,0,0,0">
+                <Ellipse Name="ellipse_Step2" HorizontalAlignment="Center" Height="200" VerticalAlignment="Top" Width="200" Fill="#FF1DADD8" RenderTransformOrigin="0.5,0.5" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" />
+                <Ellipse Name="ellipse_Step2Clip" HorizontalAlignment="Center" Height="200" VerticalAlignment="Center" Width="200" Fill="#FF0090C4" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,0,0,0">
                     <Ellipse.RenderTransform>
                         <CompositeTransform Rotation="240"/>
                     </Ellipse.RenderTransform>
                     <Ellipse.Clip>
-                        <RectangleGeometry Rect="0,0,50,330"/>
+                        <RectangleGeometry Rect="0,0,80,330"/>
                     </Ellipse.Clip>
                 </Ellipse>
-                <TextBlock HorizontalAlignment="Center" Text="Publishing Container" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF606060" FocusVisualPrimaryBrush="#FF767575" FontSize="20" FontFamily="Segoe UI Light" Grid.Column="2" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
-                <Image HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="82" Source="Assets/docker.png" Grid.Column="2" Margin="7.6,25.6,0,0" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Stretch="Uniform"/>
+                <TextBlock HorizontalAlignment="Center" Text="Publishing Container" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF606060" FocusVisualPrimaryBrush="#FF767575" FontSize="24" FontFamily="Segoe UI Light" Grid.Column="2" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True" Margin="0,0,0,15"/>
+                <Image HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="100" Source="Assets/docker.png" Grid.Column="2" Margin="7.6,25.6,0,0" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Stretch="Uniform"/>
             </RelativePanel>
             <RelativePanel Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="6,0,0,0">
-                <Ellipse Name="ellipse_Step3" HorizontalAlignment="Center" Height="125" VerticalAlignment="Top" Width="125" Fill="#FF1DADD8" RenderTransformOrigin="0.5,0.5" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" />
-                <Ellipse Name="ellipse_Step3Clip" HorizontalAlignment="Center" Height="125" VerticalAlignment="Center" Width="125" Fill="#FF0090C4" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,0,0,0">
+                <Ellipse Name="ellipse_Step3" HorizontalAlignment="Center" Height="200" VerticalAlignment="Top" Width="200" Fill="#FF1DADD8" RenderTransformOrigin="0.5,0.5" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" />
+                <Ellipse Name="ellipse_Step3Clip" HorizontalAlignment="Center" Height="200" VerticalAlignment="Center" Width="200" Fill="#FF0090C4" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,0,0,0">
                     <Ellipse.RenderTransform>
                         <CompositeTransform Rotation="240"/>
                     </Ellipse.RenderTransform>
                     <Ellipse.Clip>
-                        <RectangleGeometry Rect="0,0,50,330"/>
+                        <RectangleGeometry Rect="0,0,80,330"/>
                     </Ellipse.Clip>
                 </Ellipse>
-                <TextBlock HorizontalAlignment="Center" Text="Upgrading Cluster" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF606060" FocusVisualPrimaryBrush="#FF767575" FontSize="20
-                           " FontFamily="Segoe UI Light" Grid.Column="2" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
-                <Image HorizontalAlignment="Center" Height="82" VerticalAlignment="Top" Width="82" Source="Assets/white-cog-md.png" Grid.Column="2" Margin="0,0,0,-3" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                <TextBlock HorizontalAlignment="Center" Text="Upgrading Cluster" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF606060" FocusVisualPrimaryBrush="#FF767575" FontSize="24" FontFamily="Segoe UI Light" Grid.Column="2" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True" Margin="0,0,0,15"/>
+                <Image HorizontalAlignment="Center" Height="100" VerticalAlignment="Top" Width="100" Source="Assets/kubernetes.png" Grid.Column="2" Margin="0,0,0,-3" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"/>
             </RelativePanel>
             <RelativePanel Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="6,0,0,0">
-                <Ellipse Name="ellipse_Step4" HorizontalAlignment="Center" Height="125" VerticalAlignment="Top" Width="125" Fill="#FF1DADD8" RenderTransformOrigin="0.5,0.5" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" />
-                <Ellipse Name="ellipse_Step4Clip" HorizontalAlignment="Center" Height="125" VerticalAlignment="Center" Width="125" Fill="#FF0090C4" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,0,0,0">
+                <Ellipse Name="ellipse_Step4" HorizontalAlignment="Center" Height="200" VerticalAlignment="Top" Width="200" Fill="#FF1DADD8" RenderTransformOrigin="0.5,0.5" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" />
+                <Ellipse Name="ellipse_Step4Clip" HorizontalAlignment="Center" Height="200" VerticalAlignment="Center" Width="200" Fill="#FF0090C4" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,0,0,0">
                     <Ellipse.RenderTransform>
                         <CompositeTransform Rotation="-120"/>
                     </Ellipse.RenderTransform>
                     <Ellipse.Clip>
-                        <RectangleGeometry Rect="0,0,50,330"/>
+                        <RectangleGeometry Rect="0,0,80,330"/>
                     </Ellipse.Clip>
                 </Ellipse>
-                <TextBlock HorizontalAlignment="Center" Text="Deploy Complete" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF606060" FocusVisualPrimaryBrush="#FF767575" FontSize="20" FontFamily="Segoe UI Light" Grid.Column="2" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
-                <Image HorizontalAlignment="Center" Height="82" VerticalAlignment="Top" Width="65" Source="Assets/release.png" Grid.Column="2" Margin="0,5.2,0,0" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                <TextBlock HorizontalAlignment="Center" Text="Deploy Complete" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF606060" FocusVisualPrimaryBrush="#FF767575" FontSize="24" FontFamily="Segoe UI Light" Grid.Column="2" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True" Margin="0,0,0,15"/>
+                <Image HorizontalAlignment="Center" Height="95" VerticalAlignment="Top" Width="90" Source="Assets/release.png" Grid.Column="2" Margin="0,5.2,0,0" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"/>
             </RelativePanel>
         </Grid>
-        <RelativePanel HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="#ffffff" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignBottomWithPanel="True" Margin="0,0,0,12" Height="200">
-            <Button Name="button_deployRed" Background="#FFD62D1A" Height="175" Width="175" HorizontalAlignment="Center" HorizontalContentAlignment="Center" RelativePanel.AlignVerticalCenterWithPanel="True" FontFamily="Segoe UI" Padding="0,0,0,0" RelativePanel.LeftOf="button_deployOrange" Margin="0,0,24,0" Click="button_deployRed_Click">
+        <RelativePanel HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="#ffffff" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignBottomWithPanel="True" Margin="0,0,0,12" Height="300">
+            <Button Name="button_deployRed" Background="#FFD62D1A" Height="175" Width="175" HorizontalAlignment="Center" HorizontalContentAlignment="Center" RelativePanel.AlignVerticalCenterWithPanel="True" FontFamily="Segoe UI" Padding="0,0,0,0" RelativePanel.LeftOf="button_deployOrange" Margin="0,0,24,0" Click="button_deployRed_Click" VerticalAlignment="Bottom" RelativePanel.AlignBottomWithPanel="True">
                 <RelativePanel HorizontalAlignment="Left" Width="125" Height="125" VerticalAlignment="Top">
                     <Image HorizontalAlignment="Center" Height="65" VerticalAlignment="Top" Source="Assets/cloud.png" Width="65" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignBottomWithPanel="True" Margin="0,0,0,6"/>
                     <TextBlock FontFamily="Segoe UI" FontWeight="Bold" FocusVisualPrimaryBrush="Black" Foreground="White" Margin="0,6,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Center" FontSize="14" RelativePanel.AlignHorizontalCenterWithPanel="True" ><Run Text="Deploy Red"/><LineBreak/><Run Text="Containers"/></TextBlock>
                 </RelativePanel>
             </Button>
-            <Button Name="button_deployOrange" Background="#FFFA8B37" Height="175" Width="175" HorizontalAlignment="Center" HorizontalContentAlignment="Center" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" FontFamily="Segoe UI" Padding="0,0,0,0" Click="button_deployOrange_Click">
+            <Button Name="button_deployOrange" Background="#FFFA8B37" Height="175" Width="175" HorizontalAlignment="Center" HorizontalContentAlignment="Center" RelativePanel.AlignVerticalCenterWithPanel="True" FontFamily="Segoe UI" Padding="0,0,0,0" Click="button_deployOrange_Click" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True">
                 <RelativePanel HorizontalAlignment="Stretch" Width="125" Height="125" VerticalAlignment="Stretch">
                     <Image HorizontalAlignment="Center" Height="65" VerticalAlignment="Top" Source="Assets/cloud.png" Width="65" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignBottomWithPanel="True" Margin="0,0,0,6"/>
                     <TextBlock FontFamily="Segoe UI" FontWeight="Bold" FocusVisualPrimaryBrush="Black" Foreground="White" Margin="0,6,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Center" FontSize="14" RelativePanel.AlignHorizontalCenterWithPanel="True" ><Run Text="Deploy Orange"/><LineBreak/><Run Text="Containers"/></TextBlock>
                 </RelativePanel>
             </Button>
-            <Button Name="button_deployPurple" Background="#FF531868" Height="175" Width="175" HorizontalAlignment="Center" HorizontalContentAlignment="Center" RelativePanel.AlignVerticalCenterWithPanel="True" FontFamily="Segoe UI" Padding="0,0,0,0" RelativePanel.RightOf="button_deployOrange" Margin="24,0,0,0" Click="button_deployPurple_Click">
+            <Button Name="button_deployPurple" Background="#FF531868" Height="175" Width="175" HorizontalAlignment="Center" HorizontalContentAlignment="Center" RelativePanel.AlignVerticalCenterWithPanel="True" FontFamily="Segoe UI" Padding="0,0,0,0" RelativePanel.RightOf="button_deployOrange" Margin="24,0,0,0" Click="button_deployPurple_Click" RelativePanel.AlignBottomWithPanel="True">
                 <RelativePanel HorizontalAlignment="Stretch" Width="125" Height="125" VerticalAlignment="Stretch">
                     <Image HorizontalAlignment="Center" Height="65" VerticalAlignment="Top" Source="Assets/cloud.png" Width="65" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignBottomWithPanel="True" Margin="0,0,0,6"/>
                     <TextBlock FontFamily="Segoe UI" FontWeight="Bold" FocusVisualPrimaryBrush="Black" Foreground="White" Margin="0,6,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Center" FontSize="14" RelativePanel.AlignHorizontalCenterWithPanel="True" ><Run Text="Deploy Purple"/><LineBreak/><Run Text="Containers"/></TextBlock>
                 </RelativePanel>
             </Button>
+            <Canvas Width="600" Height="100" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True">
+                <Slider Name="slider_ReplicaCount" HorizontalAlignment="Center" Height="44" VerticalAlignment="Center" Width="291" Maximum="16" Minimum="2" Value="8" Canvas.Left="291" Canvas.Top="56" FontFamily="Segoe UI" TickFrequency="2" TickPlacement="Inline" StepFrequency="2" SmallChange="2"/>
+                <TextBlock Canvas.Left="15" Canvas.Top="46" Text="Replica Count:" TextWrapping="Wrap" FontSize="36" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe UI"/>
+            </Canvas>
         </RelativePanel>
 
     </RelativePanel>
