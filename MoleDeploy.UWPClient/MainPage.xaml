@@ -10,13 +10,245 @@
     mc:Ignorable="d"
     Background="White" FontFamily="Segoe UI Light" Loaded="Page_Loaded">
 
+    <Page.Resources>
+        <Style x:Key="ColorCheckboxStyle" TargetType="CheckBox">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
+            <Setter Property="Padding" Value="8,5,0,0" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Top"/>
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+            <Setter Property="MinWidth" Value="32" />
+            <Setter Property="MinHeight" Value="32" />
+            <Setter Property="UseSystemFocusVisuals" Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <RelativePanel>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CombinedStates">
+                                    <VisualState x:Name="UncheckedNormal" />
+                                    <VisualState x:Name="UncheckedPointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
+                                               Storyboard.TargetProperty="Stroke">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseHighBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="UncheckedPressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
+                                               Storyboard.TargetProperty="Fill">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundBaseMediumBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
+                                               Storyboard.TargetProperty="Stroke">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightTransparentBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <DoubleAnimation Storyboard.TargetName="NormalRectangle"
+                                 Storyboard.TargetProperty="StrokeThickness"
+                                 To="{ThemeResource CheckBoxCheckedStrokeThickness}"
+                                 Duration="0" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="UncheckedDisabled">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
+                                               Storyboard.TargetProperty="Fill">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
+                                               Storyboard.TargetProperty="Stroke">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseLowBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                               Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseLowBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="CheckedNormal">
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="NormalRectangle"
+                                 Storyboard.TargetProperty="StrokeThickness"
+                                 To="{ThemeResource CheckBoxCheckedStrokeThickness}"
+                                 Duration="0" />
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
+                                               Storyboard.TargetProperty="Stroke">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltTransparentBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <DoubleAnimation Storyboard.TargetName="CheckGlyph"
+                                 Storyboard.TargetProperty="Opacity"
+                                 To="1"
+                                 Duration="0" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="CheckedPointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
+                                               Storyboard.TargetProperty="Stroke">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseHighBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <DoubleAnimation Storyboard.TargetName="CheckGlyph"
+                                 Storyboard.TargetProperty="Opacity"
+                                 To="1"
+                                 Duration="0" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="CheckedPressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
+                                               Storyboard.TargetProperty="Fill">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
+                                               Storyboard.TargetProperty="Stroke">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightTransparentBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <DoubleAnimation Storyboard.TargetName="NormalRectangle"
+                                 Storyboard.TargetProperty="StrokeThickness"
+                                 To="{ThemeResource CheckBoxCheckedStrokeThickness}"
+                                 Duration="0" />
+                                            <DoubleAnimation Storyboard.TargetName="CheckGlyph"
+                                 Storyboard.TargetProperty="Opacity"
+                                 To="1"
+                                 Duration="0" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="CheckedDisabled">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
+                                               Storyboard.TargetProperty="Fill">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
+                                               Storyboard.TargetProperty="Stroke">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseLowBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                               Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseLowBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <DoubleAnimation Storyboard.TargetName="CheckGlyph"
+                                 Storyboard.TargetProperty="Opacity"
+                                 To="1"
+                                 Duration="0" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="IndeterminateNormal">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
+                                               Storyboard.TargetProperty="Stroke">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlForegroundAccentBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
+                                               Storyboard.TargetProperty="Fill">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightTransparentBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph"
+                                               Storyboard.TargetProperty="Glyph">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="&#xE73C;" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <DoubleAnimation Storyboard.TargetName="CheckGlyph"
+                                 Storyboard.TargetProperty="Opacity"
+                                 To="1"
+                                 Duration="0" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="IndeterminatePointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
+                                               Storyboard.TargetProperty="Stroke">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAccentBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph"
+                                               Storyboard.TargetProperty="Glyph">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="&#xE73C;" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <DoubleAnimation Storyboard.TargetName="CheckGlyph"
+                                 Storyboard.TargetProperty="Opacity"
+                                 To="1"
+                                 Duration="0" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="IndeterminatePressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
+                                               Storyboard.TargetProperty="Stroke">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
+                                               Storyboard.TargetProperty="Fill">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightTransparentBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph"
+                                               Storyboard.TargetProperty="Glyph">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="&#xE73C;" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <DoubleAnimation Storyboard.TargetName="CheckGlyph"
+                                 Storyboard.TargetProperty="Opacity"
+                                 To="1"
+                                 Duration="0" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="IndeterminateDisabled">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
+                                               Storyboard.TargetProperty="Fill">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
+                                               Storyboard.TargetProperty="Stroke">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseLowBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                               Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseLowBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph"
+                                               Storyboard.TargetProperty="Glyph">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="&#xE73C;" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <DoubleAnimation Storyboard.TargetName="CheckGlyph"
+                                 Storyboard.TargetProperty="Opacity"
+                                 To="1"
+                                 Duration="0" />
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+                            <Rectangle x:Name="NormalRectangle"
+                                Fill="{TemplateBinding Background}"
+                                Stroke="{TemplateBinding BorderBrush}"
+                                StrokeThickness="{TemplateBinding BorderThickness}"
+                                UseLayoutRounding="False" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
+                                />
+                            <FontIcon x:Name="CheckGlyph"
+                                FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                Glyph="&#xE001;"
+                                FontSize="32"
+                                Foreground="White" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Opacity="0" />
+                        </RelativePanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
     <RelativePanel HorizontalAlignment="Stretch">
-        <Canvas HorizontalAlignment="Stretch" Height="222" VerticalAlignment="Center" Background="#FF0078D7" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True">
+        <RelativePanel HorizontalAlignment="Stretch" Height="150" VerticalAlignment="Center"  RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True">
+            <Border BorderThickness="0,0,0,1" BorderBrush="#665C5C5C" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Margin="5,0,5,0" />
+
             <Image Margin="0,0,0,0" Source="Assets/vstsbackground.png" Stretch="UniformToFill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="1503"/>
-            <Image Source="Assets/vstslogo.png" Width="700" Height="50" Canvas.Left="463" Canvas.Top="41" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-            <TextBlock HorizontalAlignment="Left" Height="50" Text="Azure Kubernetes Service CI/CD" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" FontSize="48" FontFamily="Segoe UI Light" RelativePanel.AlignLeftWithPanel="True" Width="708" Canvas.Left="410" Canvas.Top="89" TextAlignment="Center" Margin="0,0,0,0"/>
-        </Canvas>
-        <Grid Height="350" Margin="24,-5,24,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True">
+            <TextBlock HorizontalAlignment="Left" Height="35" Text="Azure Kubernetes Service CI/CD" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#CC0078D7" FontSize="36" FontFamily="Segoe UI Light" Width="600" Canvas.Left="410" Canvas.Top="89" TextAlignment="Left" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="160,1,0,0"/>
+            <Image HorizontalAlignment="Center" Height="60" Margin="50,0,0,0" VerticalAlignment="Center" Width="60" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Source="Assets/vsts-icon.png" FocusVisualPrimaryBrush="#CC000000" Opacity="0.8"/>
+        </RelativePanel>
+        <Grid Height="350" Margin="24,-150,24,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -27,8 +259,10 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <RelativePanel Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="6,0,0,0">
-                <Ellipse Name="ellipse_Step1" HorizontalAlignment="Center" Height="200" VerticalAlignment="Top" Width="200" Fill="#FF1DADD8" RenderTransformOrigin="0.5,0.5" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" />
-                <Ellipse Name="ellipse_Step1Clip" HorizontalAlignment="Center" Height="200" VerticalAlignment="Center" Width="200" Fill="#FF0090C4" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,0,0,0">
+                <Border BorderThickness="0,0,1,0" BorderBrush="#665C5C5C" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Margin="0,75,0,75" />
+
+                <Ellipse Name="ellipse_Step1" HorizontalAlignment="Center"  Height="200" VerticalAlignment="Center" Width="200" Fill="#FF1DADD8" RenderTransformOrigin="0.5,0.5" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,-25,0,0" />
+                <Ellipse Name="ellipse_Step1Clip" HorizontalAlignment="Center"  Height="200" VerticalAlignment="Center" Width="200" Fill="#FF0090C4" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,-25,0,0">
                     <Ellipse.RenderTransform>
                         <CompositeTransform Rotation="240"/>
                     </Ellipse.RenderTransform>
@@ -36,12 +270,14 @@
                         <RectangleGeometry Rect="0,0,80,330"/>
                     </Ellipse.Clip>
                 </Ellipse>
-                <TextBlock HorizontalAlignment="Center" Text="Building App" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF606060" FocusVisualPrimaryBrush="#FF767575" FontSize="24" FontFamily="Segoe UI Light" Grid.Column="2" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True" FontWeight="Normal" Margin="0,0,0,15"/>
-                <Image HorizontalAlignment="Center" Height="100" VerticalAlignment="Top" Width="110" Source="Assets/multiple-cogs.png" Grid.Column="2" Margin="0,0,0,-3" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                <TextBlock HorizontalAlignment="Center" Text="Building App" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF6B6B6B" FocusVisualPrimaryBrush="White" FontSize="24" FontFamily="Calibri" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" FontWeight="Normal" Margin="0,230,0,15" RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                <Image HorizontalAlignment="Center" Height="100" VerticalAlignment="Top" Width="110" Source="Assets/multiple-cogs.png" Grid.Column="2" Margin="0,-23,0,0" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"/>
             </RelativePanel>
             <RelativePanel Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="6,0,0,0">
-                <Ellipse Name="ellipse_Step2" HorizontalAlignment="Center" Height="200" VerticalAlignment="Top" Width="200" Fill="#FF1DADD8" RenderTransformOrigin="0.5,0.5" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" />
-                <Ellipse Name="ellipse_Step2Clip" HorizontalAlignment="Center" Height="200" VerticalAlignment="Center" Width="200" Fill="#FF0090C4" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,0,0,0">
+                <Border BorderThickness="0,0,1,0" BorderBrush="#665C5C5C" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Margin="0,75,0,75" />
+
+                <Ellipse Name="ellipse_Step2" HorizontalAlignment="Center"  Height="200" VerticalAlignment="Center" Width="200" Fill="#FF1DADD8" RenderTransformOrigin="0.5,0.5" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,-30,0,0" />
+                <Ellipse Name="ellipse_Step2Clip" HorizontalAlignment="Center"  Height="200" VerticalAlignment="Center" Width="200" Fill="#FF0090C4" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,-30,0,0">
                     <Ellipse.RenderTransform>
                         <CompositeTransform Rotation="240"/>
                     </Ellipse.RenderTransform>
@@ -49,12 +285,14 @@
                         <RectangleGeometry Rect="0,0,80,330"/>
                     </Ellipse.Clip>
                 </Ellipse>
-                <TextBlock HorizontalAlignment="Center" Text="Publishing Container" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF606060" FocusVisualPrimaryBrush="#FF767575" FontSize="24" FontFamily="Segoe UI Light" Grid.Column="2" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True" Margin="0,0,0,15"/>
-                <Image HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="100" Source="Assets/docker.png" Grid.Column="2" Margin="7.6,25.6,0,0" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Stretch="Uniform"/>
+                <TextBlock HorizontalAlignment="Center" Text="Publishing Container" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF6B6B6B" FocusVisualPrimaryBrush="#AAB4B4B4" FontSize="24" FontFamily="Calibri" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" Margin="0,230,0,15" RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                <Image HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="100" Source="Assets/docker.png" Grid.Column="2" Margin="7.4,-20.8,0,0" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Stretch="Uniform"/>
             </RelativePanel>
             <RelativePanel Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="6,0,0,0">
-                <Ellipse Name="ellipse_Step3" HorizontalAlignment="Center" Height="200" VerticalAlignment="Top" Width="200" Fill="#FF1DADD8" RenderTransformOrigin="0.5,0.5" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" />
-                <Ellipse Name="ellipse_Step3Clip" HorizontalAlignment="Center" Height="200" VerticalAlignment="Center" Width="200" Fill="#FF0090C4" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,0,0,0">
+                <Border BorderThickness="0,0,1,0" BorderBrush="#665C5C5C" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Margin="0,75,0,75" />
+
+                <Ellipse Name="ellipse_Step3" HorizontalAlignment="Center"  Height="200" VerticalAlignment="Center" Width="200" Fill="#FF1DADD8" RenderTransformOrigin="0.5,0.5" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,-30,0,0" />
+                <Ellipse Name="ellipse_Step3Clip" HorizontalAlignment="Center"  Height="200" VerticalAlignment="Center" Width="200" Fill="#FF0090C4" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,-30,0,0">
                     <Ellipse.RenderTransform>
                         <CompositeTransform Rotation="240"/>
                     </Ellipse.RenderTransform>
@@ -62,12 +300,12 @@
                         <RectangleGeometry Rect="0,0,80,330"/>
                     </Ellipse.Clip>
                 </Ellipse>
-                <TextBlock HorizontalAlignment="Center" Text="Upgrading Cluster" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF606060" FocusVisualPrimaryBrush="#FF767575" FontSize="24" FontFamily="Segoe UI Light" Grid.Column="2" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True" Margin="0,0,0,15"/>
-                <Image HorizontalAlignment="Center" Height="100" VerticalAlignment="Top" Width="100" Source="Assets/kubernetes.png" Grid.Column="2" Margin="0,0,0,-3" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                <TextBlock HorizontalAlignment="Center" Text="Upgrading Cluster" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF6B6B6B" FocusVisualPrimaryBrush="#AA0078D7" FontSize="24" FontFamily="Calibri" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" Margin="0,230,0,15" RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                <Image HorizontalAlignment="Center" Height="100" VerticalAlignment="Top" Width="100" Source="Assets/kubernetes.png" Grid.Column="2" Margin="0,-30,0,-3" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"/>
             </RelativePanel>
             <RelativePanel Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="6,0,0,0">
-                <Ellipse Name="ellipse_Step4" HorizontalAlignment="Center" Height="200" VerticalAlignment="Top" Width="200" Fill="#FF1DADD8" RenderTransformOrigin="0.5,0.5" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" />
-                <Ellipse Name="ellipse_Step4Clip" HorizontalAlignment="Center" Height="200" VerticalAlignment="Center" Width="200" Fill="#FF0090C4" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,0,0,0">
+                <Ellipse Name="ellipse_Step4" HorizontalAlignment="Center"  Height="200" VerticalAlignment="Center" Width="200" Fill="#FF1DADD8" RenderTransformOrigin="0.5,0.5" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,-30,0,0" />
+                <Ellipse Name="ellipse_Step4Clip" HorizontalAlignment="Center"  Height="200" VerticalAlignment="Center" Width="200" Fill="#FF0090C4" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,-30,0,0">
                     <Ellipse.RenderTransform>
                         <CompositeTransform Rotation="-120"/>
                     </Ellipse.RenderTransform>
@@ -75,35 +313,47 @@
                         <RectangleGeometry Rect="0,0,80,330"/>
                     </Ellipse.Clip>
                 </Ellipse>
-                <TextBlock HorizontalAlignment="Center" Text="Deploy Complete" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF606060" FocusVisualPrimaryBrush="#FF767575" FontSize="24" FontFamily="Segoe UI Light" Grid.Column="2" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True" Margin="0,0,0,15"/>
-                <Image HorizontalAlignment="Center" Height="95" VerticalAlignment="Top" Width="90" Source="Assets/release.png" Grid.Column="2" Margin="0,5.2,0,0" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                <TextBlock HorizontalAlignment="Center" Text="Deploy Complete" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF6B6B6B" FocusVisualPrimaryBrush="#AA0078D7" FontSize="24" FontFamily="Calibri" Grid.Column="2" RelativePanel.AlignHorizontalCenterWithPanel="True" Margin="0,230,0,15" RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                <Image HorizontalAlignment="Center" Height="95" VerticalAlignment="Top" Width="90" Source="Assets/release.png" Grid.Column="2" Margin="0,-30,0,0" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"/>
             </RelativePanel>
         </Grid>
-        <RelativePanel HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="#ffffff" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignBottomWithPanel="True" Margin="0,0,0,12" Height="300">
-            <Button Name="button_deployRed" Background="#FFD62D1A" Height="175" Width="175" HorizontalAlignment="Center" HorizontalContentAlignment="Center" RelativePanel.AlignVerticalCenterWithPanel="True" FontFamily="Segoe UI" Padding="0,0,0,0" RelativePanel.LeftOf="button_deployOrange" Margin="0,0,24,0" Click="button_deployRed_Click" VerticalAlignment="Bottom" RelativePanel.AlignBottomWithPanel="True">
-                <RelativePanel HorizontalAlignment="Left" Width="125" Height="125" VerticalAlignment="Top">
-                    <Image HorizontalAlignment="Center" Height="65" VerticalAlignment="Top" Source="Assets/cloud.png" Width="65" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignBottomWithPanel="True" Margin="0,0,0,6"/>
-                    <TextBlock FontFamily="Segoe UI" FontWeight="Bold" FocusVisualPrimaryBrush="Black" Foreground="White" Margin="0,6,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Center" FontSize="14" RelativePanel.AlignHorizontalCenterWithPanel="True" ><Run Text="Deploy Red"/><LineBreak/><Run Text="Containers"/></TextBlock>
-                </RelativePanel>
-            </Button>
-            <Button Name="button_deployOrange" Background="#FFFA8B37" Height="175" Width="175" HorizontalAlignment="Center" HorizontalContentAlignment="Center" RelativePanel.AlignVerticalCenterWithPanel="True" FontFamily="Segoe UI" Padding="0,0,0,0" Click="button_deployOrange_Click" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True">
-                <RelativePanel HorizontalAlignment="Stretch" Width="125" Height="125" VerticalAlignment="Stretch">
-                    <Image HorizontalAlignment="Center" Height="65" VerticalAlignment="Top" Source="Assets/cloud.png" Width="65" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignBottomWithPanel="True" Margin="0,0,0,6"/>
-                    <TextBlock FontFamily="Segoe UI" FontWeight="Bold" FocusVisualPrimaryBrush="Black" Foreground="White" Margin="0,6,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Center" FontSize="14" RelativePanel.AlignHorizontalCenterWithPanel="True" ><Run Text="Deploy Orange"/><LineBreak/><Run Text="Containers"/></TextBlock>
-                </RelativePanel>
-            </Button>
-            <Button Name="button_deployPurple" Background="#FF531868" Height="175" Width="175" HorizontalAlignment="Center" HorizontalContentAlignment="Center" RelativePanel.AlignVerticalCenterWithPanel="True" FontFamily="Segoe UI" Padding="0,0,0,0" RelativePanel.RightOf="button_deployOrange" Margin="24,0,0,0" Click="button_deployPurple_Click" RelativePanel.AlignBottomWithPanel="True">
-                <RelativePanel HorizontalAlignment="Stretch" Width="125" Height="125" VerticalAlignment="Stretch">
-                    <Image HorizontalAlignment="Center" Height="65" VerticalAlignment="Top" Source="Assets/cloud.png" Width="65" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignBottomWithPanel="True" Margin="0,0,0,6"/>
-                    <TextBlock FontFamily="Segoe UI" FontWeight="Bold" FocusVisualPrimaryBrush="Black" Foreground="White" Margin="0,6,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Center" FontSize="14" RelativePanel.AlignHorizontalCenterWithPanel="True" ><Run Text="Deploy Purple"/><LineBreak/><Run Text="Containers"/></TextBlock>
-                </RelativePanel>
-            </Button>
-            <Canvas Width="600" Height="100" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True">
-                <Slider Name="slider_ReplicaCount" HorizontalAlignment="Center" Height="44" VerticalAlignment="Center" Width="291" Maximum="16" Minimum="2" Value="8" Canvas.Left="291" Canvas.Top="56" FontFamily="Segoe UI" TickFrequency="2" TickPlacement="Inline" StepFrequency="2" SmallChange="2"/>
-                <TextBlock Canvas.Left="15" Canvas.Top="46" Text="Replica Count:" TextWrapping="Wrap" FontSize="36" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe UI"/>
-            </Canvas>
-        </RelativePanel>
 
+        <Grid Height="300" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Background="#FFF7F7F7">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <RelativePanel Grid.Column="0">
+                <Border BorderThickness="0,0,1,0" BorderBrush="#665C5C5C" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Margin="0,25,0,25" />
+                <TextBlock HorizontalAlignment="Center" Text="Select Pod Count" TextWrapping="Wrap" VerticalAlignment="Center" RelativePanel.AlignTopWithPanel="True" Foreground="#FF6B6B6B" Margin="0,25,0,0" FontSize="24" FontFamily="Calibri" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+                <TextBlock HorizontalAlignment="Right" Text="2" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#FF6B6B6B" FontSize="24" FontFamily="Segoe UI" RelativePanel.LeftOf="slider_ReplicaCount" RelativePanel.AlignVerticalCenterWith="slider_ReplicaCount" TextAlignment="Right" Width="40" Margin="0,-10,-60,0"/>
+                <TextBlock HorizontalAlignment="Right" Text="16" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#FF6B6B6B" FontSize="24" FontFamily="Segoe UI" RelativePanel.RightOf="slider_ReplicaCount" RelativePanel.AlignVerticalCenterWith="slider_ReplicaCount" TextAlignment="Left" Width="40" Margin="-125,-10,0,0" RelativePanel.AlignLeftWith="" RelativePanel.AlignRightWith=""/>
+                <Slider Name="slider_ReplicaCount" Value="8" Minimum="2" Maximum="16" StepFrequency="2" SmallChange="2" TickFrequency="2" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Width="315" ValueChanged="Slider_ValueChanged" FontFamily="Segoe UI" />
+            </RelativePanel>
+            <RelativePanel Grid.Column="1">
+                <Border BorderThickness="0,0,1,0" BorderBrush="#665C5C5C" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Margin="0,25,0,25" />
+                <TextBlock HorizontalAlignment="Center" Text="Select Pod Color" TextWrapping="Wrap" VerticalAlignment="Center" RelativePanel.AlignTopWithPanel="True" Foreground="#FF6B6B6B" Margin="0,25,0,0" FontSize="24" FontFamily="Calibri" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+
+                <RelativePanel Height="155" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True" Margin="0,35,0,0">
+                    <CheckBox Name="checkbox_Red" Style="{StaticResource ColorCheckboxStyle}" Content="CheckBox" HorizontalAlignment="Left" Height="75" VerticalAlignment="Center" Width="75" BorderBrush="White" Background="#FFEF767A" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignTopWithPanel="True" Checked="ColorChanged" Unloaded="ColorChanged" IsChecked="True" />
+                    <CheckBox Name="checkbox_Blue" Style="{StaticResource ColorCheckboxStyle}"  Content="CheckBox" HorizontalAlignment="Left" Height="75" VerticalAlignment="Center" Width="75" BorderBrush="White" Background="#FF456990" RelativePanel.AlignVerticalCenterWith="" RelativePanel.AlignLeftWith="" RelativePanel.AlignRightWith="" RelativePanel.AlignHorizontalCenterWith="" RelativePanel.AlignTopWith="checkbox_Red" RelativePanel.LeftOf="" RelativePanel.RightOf="checkbox_Red" Margin="5,0,0,0" Checked="ColorChanged" Unloaded="ColorChanged" />
+                    <CheckBox Name="checkbox_Orange" Style="{StaticResource ColorCheckboxStyle}" Content="CheckBox" HorizontalAlignment="Left" Height="75" VerticalAlignment="Center" Width="75" BorderBrush="White" Background="#FFEEB868" RelativePanel.AlignVerticalCenterWith="" RelativePanel.AlignLeftWith="" RelativePanel.AlignRightWith="" RelativePanel.AlignHorizontalCenterWith="" RelativePanel.AlignTopWith="checkbox_Red" RelativePanel.LeftOf="" RelativePanel.RightOf="checkbox_Blue" Margin="5,0,0,0" Checked="ColorChanged" Unloaded="ColorChanged" />
+                    <CheckBox Name="checkbox_Brown" Style="{StaticResource ColorCheckboxStyle}"  Content="CheckBox" HorizontalAlignment="Left" Height="75" VerticalAlignment="Center" Width="75" BorderBrush="White" Background="#FF77685d" RelativePanel.AlignVerticalCenterWith="" RelativePanel.AlignLeftWith="" RelativePanel.AlignRightWith="" RelativePanel.AlignHorizontalCenterWith="" RelativePanel.AlignTopWith="checkbox_Red" RelativePanel.LeftOf="" RelativePanel.RightOf="checkbox_Orange" Margin="5,0,0,0" FontFamily="Calibri" Checked="ColorChanged" Unloaded="ColorChanged" />
+                    <CheckBox Name="checkbox_Green" Style="{StaticResource ColorCheckboxStyle}"  Content="CheckBox" HorizontalAlignment="Left" Height="75" VerticalAlignment="Center" Width="75" BorderBrush="White" Background="#FF45693A" RelativePanel.AlignVerticalCenterWith="" RelativePanel.AlignLeftWith="checkbox_Red" RelativePanel.AlignRightWith="" RelativePanel.AlignHorizontalCenterWith="" RelativePanel.AlignTopWith="" RelativePanel.LeftOf="" RelativePanel.RightOf="" RelativePanel.Below="checkbox_Red" Margin="0,5,0,0" Checked="ColorChanged" Unloaded="ColorChanged"  />
+                    <CheckBox Name="checkbox_Pink" Style="{StaticResource ColorCheckboxStyle}" Content="CheckBox" HorizontalAlignment="Left" Height="75" VerticalAlignment="Center" Width="75" BorderBrush="White" Background="#FFDFBBB1" RelativePanel.AlignVerticalCenterWith="" RelativePanel.AlignLeftWith="" RelativePanel.AlignRightWith="" RelativePanel.AlignHorizontalCenterWith="" RelativePanel.AlignTopWith="checkbox_Green" RelativePanel.LeftOf="" RelativePanel.RightOf="checkbox_Green" Margin="5,5,0,0" Checked="ColorChanged" Unloaded="ColorChanged" />
+                    <CheckBox Name="checkbox_Teal" Style="{StaticResource ColorCheckboxStyle}" Content="CheckBox" HorizontalAlignment="Left" Height="75" VerticalAlignment="Center" Width="75" BorderBrush="White" Background="#FF034748" RelativePanel.AlignVerticalCenterWith="" RelativePanel.AlignLeftWith="" RelativePanel.AlignRightWith="" RelativePanel.AlignHorizontalCenterWith="" RelativePanel.AlignTopWith="checkbox_Green" RelativePanel.LeftOf="" RelativePanel.RightOf="checkbox_Pink" Margin="5,5,0,0" Checked="ColorChanged" Unloaded="ColorChanged" />
+                    <CheckBox Name="checkbox_Yellow" Style="{StaticResource ColorCheckboxStyle}" Content="CheckBox" HorizontalAlignment="Left" Height="75" VerticalAlignment="Center" Width="75" BorderBrush="White" Background="#FFF6F5ae" RelativePanel.AlignVerticalCenterWith="" RelativePanel.AlignLeftWith="" RelativePanel.AlignRightWith="" RelativePanel.AlignHorizontalCenterWith="" RelativePanel.AlignTopWith="checkbox_Green" RelativePanel.LeftOf="" RelativePanel.RightOf="checkbox_Teal" Margin="5,5,0,0" Checked="ColorChanged" Unloaded="ColorChanged" />
+                </RelativePanel>
+            </RelativePanel>
+
+            <RelativePanel Grid.Column="2">
+                <TextBlock HorizontalAlignment="Center" Text="Deploy Pods" TextWrapping="Wrap" VerticalAlignment="Center" RelativePanel.AlignTopWithPanel="True" Foreground="#FF6B6B6B" Margin="0,25,0,0" FontSize="24" FontFamily="Segoe UI" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+
+                <Button Content="Begin Deployment" HorizontalAlignment="Center" Height="100" VerticalAlignment="Center" Width="315" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True" Click="button_deploy_Click"/>
+
+            </RelativePanel>
+        </Grid>
     </RelativePanel>
-
 </Page>

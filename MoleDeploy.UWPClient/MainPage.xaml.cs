@@ -42,6 +42,9 @@ namespace MoleDeploy.UWPClient
         private Color STATE_INACTIVE_COLOR = Color.FromArgb(0xFF, 0xA0, 0xA0, 0xA0);
         private double STATE_CLIP_DARKNESS_RATIO = .66;
 
+        private Windows.UI.Color SelectedColor = Windows.UI.Color.FromArgb(0xFF, 0xEF, 0x76, 0x7A);
+        private int SelectedReplicaCount = 8;
+
         private const string SETTINGS_FILE_LOCATION = "appsettings.json";
         private DeployClientSettings _Settings;
 
@@ -217,31 +220,16 @@ namespace MoleDeploy.UWPClient
             return hslColor;
         }
 
-        private void button_deployRed_Click(object sender, RoutedEventArgs e)
+
+        private void button_deploy_Click(object sender, RoutedEventArgs e)
         {
             Task.Run(async () =>
             {
-                await SubmitBuild("D62D1A");
+                await SubmitBuild();
             });
         }
 
-        private void button_deployOrange_Click(object sender, RoutedEventArgs e)
-        {
-            Task.Run(async () =>
-            {
-                await SubmitBuild("FA8B37");
-            });
-        }
-
-        private void button_deployPurple_Click(object sender, RoutedEventArgs e)
-        {
-            Task.Run(async () =>
-            {
-                await SubmitBuild("531868");
-            });
-        }
-
-        private async Task SubmitBuild(string color)
+        private async Task SubmitBuild()
         {
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
             {
@@ -250,11 +238,12 @@ namespace MoleDeploy.UWPClient
             });
 
             var url = "https://mtcden-sandbox-demo-whack-a-mole-vsts-func.azurewebsites.net/api/SubmitBuild";
+            var colorString = Color.FromArgb(SelectedColor.A, SelectedColor.R, SelectedColor.G, SelectedColor.B).ToArgb().ToString("X8").Substring(2, 6);
 
             var request = new SubmitBuildRequest()
             {
-                Color = color,
-                ReplicaCount = (int)slider_ReplicaCount.Value
+                Color = colorString,
+                ReplicaCount = SelectedReplicaCount
             };
 
             var body = JsonConvert.SerializeObject(request);
@@ -263,6 +252,35 @@ namespace MoleDeploy.UWPClient
 
             var result = await client.PostAsync(url, content);
             var resultBody = result.Content.ReadAsStringAsync();
+        }
+
+        private void ColorChanged(object sender, RoutedEventArgs e)
+        {
+            var checkboxes = new List<CheckBox>()
+            {
+                checkbox_Brown,
+                checkbox_Blue,
+                checkbox_Green,
+                checkbox_Orange,
+                checkbox_Pink,
+                checkbox_Red,
+                checkbox_Teal,
+                checkbox_Yellow
+            };
+
+            var selected = (CheckBox)sender;
+
+            foreach(var checkbox in checkboxes.Where(a => a != selected && a != null))
+            {
+                checkbox.IsChecked = false;
+            }
+
+            SelectedColor = ((SolidColorBrush)selected.Background).Color;
+        }
+
+        private void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            SelectedReplicaCount = (int)((Slider)sender).Value;
         }
     }
 }
