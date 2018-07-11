@@ -48,8 +48,6 @@ namespace MoleDeploy.Vsts {
                 Parameters = parameters
             };
 
-           // build.Properties.Add("pod_color", parameters);
-
             await buildClient.QueueBuildAsync(build);
         }
         

@@ -7,5 +7,7 @@ namespace MoleDeploy.Contracts
     {
         [JsonConverter(typeof(StringEnumConverter))]
         public VstsBuildState State { get; set; }
+
+        public string Message { get; set; }
     }
 }

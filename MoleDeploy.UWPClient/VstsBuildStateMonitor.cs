@@ -11,7 +11,7 @@ namespace MoleDeploy.UWPClient
 
     public class VstsBuildStateMonitor
     {
-        public delegate void BuildStateChangeHandler(object sender, VstsBuildState state);
+        public delegate void BuildStateChangeHandler(object sender, VstsBuildState state, string message = null);
 
         public event BuildStateChangeHandler OnStateBegin;
         public event BuildStateChangeHandler OnStateEnd;
@@ -20,11 +20,11 @@ namespace MoleDeploy.UWPClient
 
         private HubConnection _Connection;
 
-        public VstsBuildStateMonitor(string endpoint, string accessKey)
+        public VstsBuildStateMonitor(string endpoint, string accessKey, string hubName)
         {
             var signalR = new AzureSignalR($"Endpoint={endpoint};AccessKey={accessKey}");
-            var hubUrl = signalR.GetClientHubUrl("Status");
-            var token = signalR.GenerateAccessToken("Status");
+            var hubUrl = signalR.GetClientHubUrl(hubName);
+            var token = signalR.GenerateAccessToken(hubName);
 
             _Connection = new HubConnectionBuilder()
             .WithUrl(hubUrl, options => {
@@ -32,7 +32,7 @@ namespace MoleDeploy.UWPClient
             })
             .Build();
 
-            _Connection.On<VstsBuildStateChangeNotification>("StatusChanged", (noticifation) =>
+            _Connection.On<VstsBuildStateChangeNotification>("StatusUpdate", (noticifation) =>
             {
                 ProcessStateChangeNotification(noticifation);
             });
@@ -43,20 +43,20 @@ namespace MoleDeploy.UWPClient
             return _Connection.StartAsync();
         }
 
-        private void ProcessStateChangeNotification(VstsBuildStateChangeNotification message) {
-            if (state != VstsBuildState.Unknown && state != VstsBuildState.DeployComplete)
+        private void ProcessStateChangeNotification(VstsBuildStateChangeNotification notification) {
+            if (state != VstsBuildState.Unknown && state != VstsBuildState.DeployComplete && notification.State != state)
             {
                 OnStateEnd(this, state);
             }
 
-            if (message?.State == null)
+            if (notification?.State == null)
             {
                 return;
             }
 
-            state = message.State;
+            state = notification.State;
 
-            OnStateBegin(this, message.State);
+            OnStateBegin(this, notification.State, notification.Message);
         }
     }
 }

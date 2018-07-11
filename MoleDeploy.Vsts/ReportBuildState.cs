@@ -31,7 +31,7 @@ namespace MoleDeploy.Vsts.Functions
 
             var signalR = new AzureSignalR($"Endpoint={endpoint};AccessKey={accessKey}");
 
-            var result = await signalR.SendAsync("Status", "StatusChanged", notification);
+            var result = await signalR.SendAsync(config["SignalR:HubName"], "StatusUpdate", notification);
 
             return req.CreateResponse(HttpStatusCode.OK);
         }

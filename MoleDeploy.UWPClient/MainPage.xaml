@@ -248,7 +248,7 @@
             <TextBlock HorizontalAlignment="Left" Height="35" Text="Azure Kubernetes Service CI/CD" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#CC0078D7" FontSize="36" FontFamily="Segoe UI Light" Width="600" Canvas.Left="410" Canvas.Top="89" TextAlignment="Left" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="160,1,0,0"/>
             <Image HorizontalAlignment="Center" Height="60" Margin="50,0,0,0" VerticalAlignment="Center" Width="60" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Source="Assets/vsts-icon.png" FocusVisualPrimaryBrush="#CC000000" Opacity="0.8"/>
         </RelativePanel>
-        <Grid Height="350" Margin="24,-150,24,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True">
+        <Grid Name="BuildStatesGrid" Height="350" Margin="24,-150,24,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -317,8 +317,8 @@
                 <Image HorizontalAlignment="Center" Height="95" VerticalAlignment="Top" Width="90" Source="Assets/release.png" Grid.Column="2" Margin="0,-30,0,0" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"/>
             </RelativePanel>
         </Grid>
-
-        <Grid Height="300" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Background="#FFF7F7F7">
+        <TextBlock Name="textBlock_SubStatus" RelativePanel.Below="BuildStatesGrid" RelativePanel.AlignHorizontalCenterWithPanel="True" Text="Hello There" Foreground="#FF6B6B6B" FontSize="18"/>
+        <Grid Name="OptionsGrid" Height="300" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Background="#FFF7F7F7">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -328,9 +328,8 @@
             <RelativePanel Grid.Column="0">
                 <Border BorderThickness="0,0,1,0" BorderBrush="#665C5C5C" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Margin="0,25,0,25" />
                 <TextBlock HorizontalAlignment="Center" Text="Select Pod Count" TextWrapping="Wrap" VerticalAlignment="Center" RelativePanel.AlignTopWithPanel="True" Foreground="#FF6B6B6B" Margin="0,25,0,0" FontSize="24" FontFamily="Calibri" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
-                <TextBlock HorizontalAlignment="Right" Text="2" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#FF6B6B6B" FontSize="24" FontFamily="Segoe UI" RelativePanel.LeftOf="slider_ReplicaCount" RelativePanel.AlignVerticalCenterWith="slider_ReplicaCount" TextAlignment="Right" Width="40" Margin="0,-10,-60,0"/>
-                <TextBlock HorizontalAlignment="Right" Text="16" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#FF6B6B6B" FontSize="24" FontFamily="Segoe UI" RelativePanel.RightOf="slider_ReplicaCount" RelativePanel.AlignVerticalCenterWith="slider_ReplicaCount" TextAlignment="Left" Width="40" Margin="-125,-10,0,0" RelativePanel.AlignLeftWith="" RelativePanel.AlignRightWith=""/>
-                <Slider Name="slider_ReplicaCount" Value="8" Minimum="2" Maximum="16" StepFrequency="2" SmallChange="2" TickFrequency="2" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Width="315" ValueChanged="Slider_ValueChanged" FontFamily="Segoe UI" />
+                <TextBlock Name="TextBlock_ReplicaCount" HorizontalAlignment="Right" Text="8" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#FF6B6B6B" FontSize="24" FontFamily="Segoe UI" TextAlignment="Center" Width="40" RelativePanel.Above="slider_ReplicaCount" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+                <Slider Name="slider_ReplicaCount" Value="8" Minimum="2" Maximum="14" StepFrequency="2" SmallChange="2" TickFrequency="2" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Width="315" ValueChanged="Slider_ValueChanged" FontFamily="Segoe UI" />
             </RelativePanel>
             <RelativePanel Grid.Column="1">
                 <Border BorderThickness="0,0,1,0" BorderBrush="#665C5C5C" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Margin="0,25,0,25" />
@@ -351,7 +350,7 @@
             <RelativePanel Grid.Column="2">
                 <TextBlock HorizontalAlignment="Center" Text="Deploy Pods" TextWrapping="Wrap" VerticalAlignment="Center" RelativePanel.AlignTopWithPanel="True" Foreground="#FF6B6B6B" Margin="0,25,0,0" FontSize="24" FontFamily="Segoe UI" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
 
-                <Button Content="Begin Deployment" HorizontalAlignment="Center" Height="100" VerticalAlignment="Center" Width="315" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True" Click="button_deploy_Click"/>
+                <Button Name="button_Deploy" Content="Begin Deployment" HorizontalAlignment="Center" Height="100" VerticalAlignment="Center" Width="315" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True" Click="button_deploy_Click"/>
 
             </RelativePanel>
         </Grid>
