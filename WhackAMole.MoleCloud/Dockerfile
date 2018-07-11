@@ -1,6 +1,7 @@
-FROM microsoft/aspnetcore:2.0.0-jessie
-ARG source
+FROM microsoft/dotnet:2.1.1-aspnetcore-runtime-stretch-slim
+ARG pod_color=7FC9FF
+ENV POD_COLOR=$pod_color
 WORKDIR /app
-EXPOSE 80
-COPY ${source:-obj/Docker/publish} .
-ENTRYPOINT ["dotnet", "WhackAMole.MoleCloud.dll"]
+EXPOSE 8080
+COPY ./obj/Docker/publish .
+ENTRYPOINT ["dotnet", "WhackAMole.MoleCloud.dll", "--urls", "http://*:8080"]

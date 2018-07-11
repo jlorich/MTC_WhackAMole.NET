@@ -1,0 +1,4 @@
+appVersion: "1.0"
+description: A Helm chart for MTC_WhackAMole.NET KubeAdmin
+name: kube-admin
+version: 0.0.1

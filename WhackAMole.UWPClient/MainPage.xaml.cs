@@ -11,6 +11,7 @@ using WhackAMole.UWPClient.Controls;
 using WhackAMole.UWPClient.Models;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -35,10 +36,28 @@ namespace WhackAMole.UWPClient
 
         private WhackSpace _whackSpace;
         private Dictionary<string, string> _moleMap = new Dictionary<string, string>();
+        private const string SETTINGS_FILE_LOCATION = "appsettings.json";
+
+        private WhackSettings _Settings;
+
+        private WhackSettings Settings
+        {
+            get
+            {
+                if (_Settings != null)
+                {
+                    return _Settings;
+                }
+
+                var packageFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
+                var file = packageFolder.GetFileAsync(SETTINGS_FILE_LOCATION).GetAwaiter().GetResult();
+                var data = FileIO.ReadTextAsync(file).GetAwaiter().GetResult();
+                _Settings = JsonConvert.DeserializeObject<WhackSettings>(data);
+
+                return _Settings;
+            }
+        }
         
-
-
-
         public MainPage()
         {
             this.InitializeComponent();
@@ -46,7 +65,7 @@ namespace WhackAMole.UWPClient
                 MolePen.Clip = new RectangleGeometry() { Rect = new Rect(0, 0, MolePen.ActualWidth, MolePen.ActualHeight) };
                 if (_whackSpace == null)
                 {
-                    _whackSpace = new WhackSpace(MolePen.ActualWidth, MolePen.ActualHeight);
+                    _whackSpace = new WhackSpace(MolePen.ActualWidth, MolePen.ActualHeight, Settings);
                     DataContext = _whackSpace;
                     _whackSpace.Inactive += async (s1, e1) =>
                     {
@@ -75,18 +94,11 @@ namespace WhackAMole.UWPClient
 
 
 
-    
-
         private async Task Start()
         {
             Debug.WriteLine("starting");
             await _whackSpace.SetupAsync(MolePen);
             _whackSpace.Start();
         }
-
-
-
-
-
     }
 }

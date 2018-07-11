@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WhackAMole.KubeAdmin.Models;
-using WhackAMole.KubeAdmin.Services;
+using Microsoft.Extensions.Options;
+using WhackAMole.KubeServices;
+using WhackAMole.KubeServices.Models;
+using WhackAMole.KubeServices.Providers;
 
 namespace WhackAMole.KubeAdmin.Controllers
 {
@@ -16,12 +18,13 @@ namespace WhackAMole.KubeAdmin.Controllers
         private readonly IAuthenticationProvider _auth;
         private readonly NodesRequest _nodesRequest;
 
-        public NodesController(IAuthenticationProvider authProvider)
+        public NodesController(IAuthenticationProvider authProvider, IOptions<KubeOptions> options)
         {
             _auth = authProvider;
-            var k8s = new KubeRequestBuilder(_auth);
+            var k8s = new KubeRequestBuilder(_auth, options.Value);
             _nodesRequest = k8s.Create<NodesRequest>();
         }
+
         // GET: api/values
         [HttpGet]
         public async Task<IActionResult> Get()
@@ -39,30 +42,10 @@ namespace WhackAMole.KubeAdmin.Controllers
 
                 return new OkObjectResult(nodes);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new NotFoundResult();
             }
-        }
-
-
-
-        // POST: api/Noes
-        [HttpPost]
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT: api/Noes/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

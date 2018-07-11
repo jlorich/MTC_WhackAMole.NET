@@ -14,14 +14,16 @@ namespace WhackAMole.KubeAdmin
     {
         public static void Main(string[] args)
         {
+            var configuration = new ConfigurationBuilder()
+                .AddCommandLine(args)
+                .Build();
+
             var host = new WebHostBuilder()
                 .UseKestrel()
+                .UseConfiguration(configuration)
                 .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseIISIntegration()
                 .UseStartup<Startup>()
                 .UseApplicationInsights()
-                //.UseUrls("http://localhost:8080/")
-
                 .Build();
 
             host.Run();

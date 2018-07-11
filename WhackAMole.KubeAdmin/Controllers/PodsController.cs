@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using WhackAMole.KubeAdmin.Models;
-using WhackAMole.KubeAdmin.Services;
+using Microsoft.Extensions.Options;
+using WhackAMole.KubeServices;
+using WhackAMole.KubeServices.Models;
+using WhackAMole.KubeServices.Providers;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,10 +19,10 @@ namespace WhackAMole.KubeAdmin.Controllers
         private readonly IAuthenticationProvider _auth;
         private readonly PodsRequest _podsRequest;
 
-        public PodsController(IAuthenticationProvider authProvider)
+        public PodsController(IAuthenticationProvider authProvider, IOptions<KubeOptions> options)
         {
             _auth = authProvider;
-            var k8s = new KubeRequestBuilder(_auth);
+            var k8s = new KubeRequestBuilder(_auth, options.Value);
             _podsRequest = k8s.Create<PodsRequest>();
         }
         [HttpGet]
@@ -57,19 +59,6 @@ namespace WhackAMole.KubeAdmin.Controllers
             {
                 return new NotFoundResult();
             }
-        }
-
-
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
         }
 
         // DELETE api/values/5

@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using WhackAMole.MoleCloud.Services;
+using WhackAMole.KubeServices;
+using WhackAMole.KubeServices.Providers;
 
 namespace WhackAMole.MoleCloud
 {
@@ -20,6 +21,7 @@ namespace WhackAMole.MoleCloud
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
+
             Configuration = builder.Build();
         }
 
@@ -30,7 +32,6 @@ namespace WhackAMole.MoleCloud
         {
             // Add framework services.
             services.AddMvc();
-            services.AddTransient<IAuthenticationProvider, LocalServiceTokenProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

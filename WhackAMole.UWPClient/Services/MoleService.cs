@@ -16,19 +16,17 @@ namespace WhackAMole.UWPClient.Services
     {
         private static MoleService _instance;
         const string MOLE_API = "api/mole";
-     
-        //private HttpClient _http;
-        private static string _endpoint;
 
+        private static string _endpoint;
 
         private MoleService()
         {
-           throw new Exception("Don't do this");
+            throw new Exception("Don't do this");
         }
         private MoleService(string endpoint)
         {
             _endpoint = endpoint;
-           
+
         }
 
         private HttpClient CreateHttp()
@@ -59,13 +57,10 @@ namespace WhackAMole.UWPClient.Services
 
             if (!Uri.IsWellFormedUriString(endpoint, UriKind.Absolute))
                 throw new ArgumentException("Bad endpoint format");
-                    
-             _instance = new MoleService(endpoint);
+
+            _instance = new MoleService(endpoint);
         }
 
-     
-
-      
         public async Task<MoleState> GetStateUpdateAsync()
         {
             try
@@ -83,6 +78,6 @@ namespace WhackAMole.UWPClient.Services
             }
         }
 
-       
+
     }
 }

@@ -71,7 +71,7 @@ namespace WhackAMole.UWPClient.Services
                 if (since == null)
                     since = DateTimeOffset.MinValue;
 
-                var uri = $"{_endpoint}/{POD_API}/molecloud";
+                var uri = $"{_endpoint}/{POD_API}/mole-cloud";
                 var json = await _http.GetStringAsync(new Uri(uri));
                 var pods = JsonConvert.DeserializeObject<KubePod[]>(json);
 
