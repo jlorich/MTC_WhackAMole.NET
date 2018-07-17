@@ -317,7 +317,7 @@
                 <Image HorizontalAlignment="Center" Height="95" VerticalAlignment="Top" Width="90" Source="Assets/release.png" Grid.Column="2" Margin="0,-30,0,0" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"/>
             </RelativePanel>
         </Grid>
-        <TextBlock Name="textBlock_SubStatus" RelativePanel.Below="BuildStatesGrid" RelativePanel.AlignHorizontalCenterWithPanel="True" Text="Hello There" Foreground="#FF6B6B6B" FontSize="18"/>
+        <TextBlock Name="textBlock_SubStatus" RelativePanel.Below="BuildStatesGrid" RelativePanel.AlignHorizontalCenterWithPanel="True" Text="" Foreground="#FF6B6B6B" FontSize="18"/>
         <Grid Name="OptionsGrid" Height="300" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Background="#FFF7F7F7">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
