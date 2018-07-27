@@ -282,7 +282,8 @@ namespace MoleDeploy.UWPClient
                 var request = new SubmitBuildRequest()
                 {
                     Color = colorString,
-                    ReplicaCount = SelectedReplicaCount
+                    ReplicaCount = SelectedReplicaCount,
+                    ServiceName = Settings.ServiceName
                 };
 
                 var body = JsonConvert.SerializeObject(request);

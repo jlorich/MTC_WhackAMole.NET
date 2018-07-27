@@ -17,18 +17,19 @@ namespace WhackAMole.UWPClient.Services
         private static AdminService _instance;
         const string POD_API = "api/pods";
         const string NODE_API = "api/nodes";
-        //private HttpClient _http;
+        
         private static string _endpoint;
+        private static string _serviceName;
 
 
         private AdminService()
         {
             throw new Exception("Don't do this");
         }
-        private AdminService(string endpoint)
+        private AdminService(string endpoint, string serviceName)
         {
             _endpoint = endpoint;
-
+            _serviceName = serviceName;
         }
 
         private HttpClient CreateHttp()
@@ -36,6 +37,8 @@ namespace WhackAMole.UWPClient.Services
             var filter = new HttpBaseProtocolFilter();
             filter.MaxConnectionsPerServer = 20;
             filter.CacheControl.ReadBehavior = HttpCacheReadBehavior.NoCache;
+
+            // TODO: Make this static or use HTTPClientFactory if available in UWP - we shoudln't be using new instances each time
             return new HttpClient(filter);
         }
 
@@ -49,7 +52,7 @@ namespace WhackAMole.UWPClient.Services
             }
         }
 
-        public static void Create(string endpoint)
+        public static void Create(string endpoint, string serviceName)
         {
             if (_instance != null && endpoint != _endpoint)
                 throw new Exception("Instance already created");
@@ -60,7 +63,7 @@ namespace WhackAMole.UWPClient.Services
             if (!Uri.IsWellFormedUriString(endpoint, UriKind.Absolute))
                 throw new ArgumentException("Bad endpoint format");
 
-            _instance = new AdminService(endpoint);
+            _instance = new AdminService(endpoint, serviceName);
         }
 
         public async Task<List<KubePod>> GetPodsAsync(DateTimeOffset? since = null)
@@ -71,7 +74,7 @@ namespace WhackAMole.UWPClient.Services
                 if (since == null)
                     since = DateTimeOffset.MinValue;
 
-                var uri = $"{_endpoint}/{POD_API}/mole-cloud";
+                var uri = $"{_endpoint}/{POD_API}/{_serviceName}";
                 var json = await _http.GetStringAsync(new Uri(uri));
                 var pods = JsonConvert.DeserializeObject<KubePod[]>(json);
 
