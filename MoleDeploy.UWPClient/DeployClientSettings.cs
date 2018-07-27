@@ -9,5 +9,7 @@
         public string SignalRAccessKey { get; set; }
 
         public string SignalRHubName { get; set; }
+
+        public string ServiceName { get; set; }
     }
 }

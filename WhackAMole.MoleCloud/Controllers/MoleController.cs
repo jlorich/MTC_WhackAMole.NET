@@ -15,6 +15,7 @@ namespace WhackAMole.MoleCloud.Controllers
         private const int START = 65;
         private const int END = 91;
         private int _count = START;
+        private string _defaultColor = "FF691E"; // Change this and queue a new build manually to update the color for a specific MTC
 
         [HttpGet]
         public IActionResult Get()
@@ -22,6 +23,12 @@ namespace WhackAMole.MoleCloud.Controllers
             var pod = Environment.GetEnvironmentVariable("POD_NAME");
             var host = Environment.GetEnvironmentVariable("NODE_NAME");
             var color = Environment.GetEnvironmentVariable("POD_COLOR");
+
+            if (String.IsNullOrEmpty(color))
+            {
+                color = _defaultColor;
+            }
+
             var rnd = new Random();
             var c = (char)rnd.Next(START, END);
             var character = c.ToString();

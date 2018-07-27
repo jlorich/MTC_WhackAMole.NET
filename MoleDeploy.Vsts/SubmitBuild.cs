@@ -27,7 +27,13 @@ namespace MoleDeploy.Vsts.Functions
             var projectName = config["Vsts:ProjectName"];
             var definitionId = int.Parse(config["Vsts:BuildId"]);
             var accessToken = config["Vsts:AccessToken"];
-            var parameters = $"{{\"pod_color\": \"{request.Color}\", \"pod_replica_count\": \"{request.ReplicaCount}\"}}";
+
+            var parameters =
+            "{" +
+                $"\"pod_color\": \"{request.Color}\"," +
+                $"\"pod_replica_count\": \"{request.ReplicaCount}\"," +
+                $"\"service_name\": \"{request.ServiceName}\"" +
+            "}";
 
             var client = new VstsClient(collection, accessToken);
 

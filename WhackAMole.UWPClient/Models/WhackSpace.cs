@@ -111,7 +111,7 @@ namespace WhackAMole.UWPClient.Models
             _movementEngine = new BaseMovementEngine(Width, Height, MOLE_SIZE);
 
             MoleService.Create(settings.MoleEndpoint);
-            AdminService.Create(settings.AdminEndpoint);
+            AdminService.Create(settings.AdminEndpoint, settings.ServiceName);
 
             _moleService = MoleService.Instance;
             _adminService = AdminService.Instance;

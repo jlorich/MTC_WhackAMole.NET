@@ -5,5 +5,7 @@
         public string MoleEndpoint { get; set; }
 
         public string AdminEndpoint { get; set; }
+
+        public string ServiceName { get; set; }
     }
 }
