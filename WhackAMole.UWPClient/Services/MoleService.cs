@@ -15,17 +15,20 @@ namespace WhackAMole.UWPClient.Services
     public class MoleService : IMoleService
     {
         private static MoleService _instance;
-        const string MOLE_API = "api/mole";
 
         private static string _endpoint;
+        private static string _serviceName;
+
+        private const string MOLE_API = "api/mole";
 
         private MoleService()
         {
             throw new Exception("Don't do this");
         }
-        private MoleService(string endpoint)
+        private MoleService(string endpoint, string serviceName)
         {
             _endpoint = endpoint;
+            _serviceName = serviceName;
 
         }
 
@@ -47,7 +50,7 @@ namespace WhackAMole.UWPClient.Services
             }
         }
 
-        public static void Create(string endpoint)
+        public static void Create(string endpoint, string serviceName)
         {
             if (_instance != null && endpoint != _endpoint)
                 throw new Exception("Instance already created");
@@ -58,7 +61,7 @@ namespace WhackAMole.UWPClient.Services
             if (!Uri.IsWellFormedUriString(endpoint, UriKind.Absolute))
                 throw new ArgumentException("Bad endpoint format");
 
-            _instance = new MoleService(endpoint);
+            _instance = new MoleService(endpoint, serviceName);
         }
 
         public async Task<MoleState> GetStateUpdateAsync()
@@ -66,7 +69,7 @@ namespace WhackAMole.UWPClient.Services
             try
             {
                 var _http = CreateHttp();
-                var uri = $"{_endpoint}/{MOLE_API}";
+                var uri = $"{_endpoint}/{_serviceName}/{MOLE_API}";
                 var mole = await _http.GetStringAsync(new Uri(uri));
                 var state = JsonConvert.DeserializeObject<MoleState>(mole);
                 return state;
