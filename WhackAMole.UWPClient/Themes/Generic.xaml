@@ -52,7 +52,7 @@
                                 <TranslateTransform x:Name="PART_ValueTransform" ></TranslateTransform>
                             </TextBlock.RenderTransform>
                         </TextBlock>-->
-                        <TextBlock x:Name="PART_Value" Text="&#xEB52;" FontFamily="Segoe MDL2 Assets" Foreground="Black" FontWeight="Bold" FontSize="16" IsTapEnabled="False" >
+                        <TextBlock x:Name="PART_Value" Text="&#xEB52;" FontFamily="Segoe MDL2 Assets" Foreground="Black" FontWeight="Bold" FontSize="16" IsHitTestVisible="false" >
                             <TextBlock.RenderTransform>
                                 <TranslateTransform x:Name="PART_ValueTransform" ></TranslateTransform>
                             </TextBlock.RenderTransform>

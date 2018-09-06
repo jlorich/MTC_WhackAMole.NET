@@ -256,19 +256,21 @@ namespace WhackAMole.UWPClient.Controls
             _displayBorder = GetTemplateChild("PART_DisplayBorder") as Border;
 
             VisualStateManager.GoToState(this, "Normal", true);
-            _mole.Tapped += _mole_Tapped;
+            _mole.PointerPressed += _mole_PointerPressed;
             _isReady = true;
             base.OnApplyTemplate();
         }
 
-        private void _mole_Tapped(object sender, TappedRoutedEventArgs e)
+        private void _mole_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
             if (_isDestroyed)
                 return;
             _isDestroyed = true;
             MoleTapped?.Invoke(this, new MoleTappedArgs() { MoleName = MoleName, Mole = this.DataContext as MoleViewModel });
+
         }
 
+       
         private void LayoutDisplayPanel()
         {
 
