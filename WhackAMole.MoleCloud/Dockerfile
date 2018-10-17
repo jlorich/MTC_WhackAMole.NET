@@ -3,5 +3,5 @@ ARG pod_color=7FC9FF
 ENV POD_COLOR=$pod_color
 WORKDIR /app
 EXPOSE 8080
-COPY ./obj/Docker/publish .
+COPY ./bin/Debug/netcoreapp2.1/publish/ .
 ENTRYPOINT ["dotnet", "WhackAMole.MoleCloud.dll", "--urls", "http://*:8080"]
