@@ -27,8 +27,8 @@ namespace WhackAMole.KubeAdmin.Controllers
         }
 
         // GET: api/ingress
-        [HttpGet()]
-        public async Task<IActionResult> Get(string id)
+        [HttpGet]
+        public async Task<IActionResult> Get()
         {
             try
             {
