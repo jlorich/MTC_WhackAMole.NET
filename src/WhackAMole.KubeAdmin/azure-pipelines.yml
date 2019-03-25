@@ -1,0 +1,43 @@
+pool:
+  vmImage: 'ubuntu-16.04'
+
+trigger:
+  branches: 
+    include:
+      - master
+  paths:
+    include:
+      - src/WhackAMole.KubeAdmin
+      - src/WhackAMole.KubeServices
+
+steps:
+- script: |
+    cd WhackAMole.KubeAdmin
+    dotnet publish -c Reelase -o "./obj/Docker/Publish"
+
+- task: Docker@0
+  displayName: 'Build an image'
+  inputs:
+    azureSubscription: 'MTC Denver Sandbox (b0e04a4a-a321-4b66-b8fd-13715262ba3c)'
+    azureContainerRegistry: '{"loginServer":"mtcdensandboxdemo.azurecr.io", "id" : "/subscriptions/b0e04a4a-a321-4b66-b8fd-13715262ba3c/resourceGroups/demo-container-registry-sandbox-rg/providers/Microsoft.ContainerRegistry/registries/mtcdensandboxdemo"}'
+    dockerFile: WhackAMole.KubeAdmin/Dockerfile
+    imageName: '$(Build.Repository.Name)/kube-admin:$(Build.BuildId)'
+    workingDirectory: WhackAMole.MoleCloud
+
+- task: Docker@0
+  displayName: 'Push an image'
+  inputs:
+    azureSubscription: 'MTC Denver Sandbox (b0e04a4a-a321-4b66-b8fd-13715262ba3c)'
+    azureContainerRegistry: '{"loginServer":"mtcdensandboxdemo.azurecr.io", "id" : "/subscriptions/b0e04a4a-a321-4b66-b8fd-13715262ba3c/resourceGroups/demo-container-registry-sandbox-rg/providers/Microsoft.ContainerRegistry/registries/mtcdensandboxdemo"}'
+    action: 'Push an image'
+    imageName: '$(Build.Repository.Name)/kube-admin:$(Build.BuildId)'
+
+- task: CopyFiles@2
+  displayName: 'Stage helm chart'
+  inputs:
+    SourceFolder: 'helm/kube-admin'
+    TargetFolder: '$(build.artifactstagingdirectory)/helm/kube-admin'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: drop'
+
