@@ -16,10 +16,6 @@ variables:
 
 
 steps:
-- script: |
-    cd WhackAMole.KubeAdmin
-    dotnet publish WhackAMole.KubeAdmin.csproj -c Release -o "./obj/Docker/Publish"
-
 - task: AzureCLI@1
   displayName: 'Azure CLI '
   inputs:
