@@ -11,8 +11,9 @@ trigger:
       - src/WhackAMole.KubeServices
 
 variables:
-  azure_container_registry: mtcdensandboxdemo.azurecr.io
-  container_image_name: '$(azure_container_registry)/$(Build.Repository.Name)/kube-admin:$(Build.BuildId)'
+  acr_name: mtcdensandboxdemo
+  registry: $(mtcdensandboxdemo).azurecr.io
+  container_image_name: $(registry)/$(Build.Repository.Name)/kube-admin:$(Build.BuildId)
 
 
 steps:
@@ -25,7 +26,7 @@ steps:
       cd src/WhackAMole.KubeAdmin
       dotnet publish WhackAMole.KubeAdmin.csproj -c Release -o "./obj/Docker/Publish"
 
-      az acr login --name mtcdensandboxdemo.azurecr.io
+      az acr login --name $(acr_name)
 
       docker build . -t $(container_image_name)
       docker tag $(container_image_name) latest
