@@ -33,7 +33,7 @@ steps:
       docker push $(container_image_name)
       docker push latest
 
-      cp ../../helm/kube-admin $(build.artifactstagingdirectory)/helm/kube-admin -R
+      cp ../../charts/kube-admin $(build.artifactstagingdirectory)/helm/kube-admin -R
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: drop'
