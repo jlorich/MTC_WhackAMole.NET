@@ -22,7 +22,7 @@ steps:
     azureSubscription: 'MTC Denver Sandbox (b0e04a4a-a321-4b66-b8fd-13715262ba3c)'
     scriptLocation: inlineScript
     inlineScript: |
-      cd WhackAMole.KubeAdmin
+      cd src/WhackAMole.KubeAdmin
       dotnet publish WhackAMole.KubeAdmin.csproj -c Release -o "./obj/Docker/Publish"
 
       az acr login --name mtcdensandboxdemo.azurecr.io
