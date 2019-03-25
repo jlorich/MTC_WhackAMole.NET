@@ -10,33 +10,33 @@ trigger:
       - src/WhackAMole.KubeAdmin
       - src/WhackAMole.KubeServices
 
+variables:
+  azure_container_registry: mtcdensandboxdemo.azurecr.io
+  container_image_name: '$(azure_container_registry)/$(Build.Repository.Name)/kube-admin:$(Build.BuildId)'
+
+
 steps:
 - script: |
     cd WhackAMole.KubeAdmin
-    dotnet publish -c Reelase -o "./obj/Docker/Publish"
+    dotnet publish WhackAMole.KubeAdmin.csproj -c Release -o "./obj/Docker/Publish"
 
-- task: Docker@0
-  displayName: 'Build an image'
+- task: AzureCLI@1
+  displayName: 'Azure CLI '
   inputs:
     azureSubscription: 'MTC Denver Sandbox (b0e04a4a-a321-4b66-b8fd-13715262ba3c)'
-    azureContainerRegistry: '{"loginServer":"mtcdensandboxdemo.azurecr.io", "id" : "/subscriptions/b0e04a4a-a321-4b66-b8fd-13715262ba3c/resourceGroups/demo-container-registry-sandbox-rg/providers/Microsoft.ContainerRegistry/registries/mtcdensandboxdemo"}'
-    dockerFile: WhackAMole.KubeAdmin/Dockerfile
-    imageName: '$(Build.Repository.Name)/kube-admin:$(Build.BuildId)'
-    workingDirectory: WhackAMole.MoleCloud
+    scriptLocation: inlineScript
+    inlineScript: |
+      cd WhackAMole.KubeAdmin
+      dotnet publish WhackAMole.KubeAdmin.csproj -c Release -o "./obj/Docker/Publish"
 
-- task: Docker@0
-  displayName: 'Push an image'
-  inputs:
-    azureSubscription: 'MTC Denver Sandbox (b0e04a4a-a321-4b66-b8fd-13715262ba3c)'
-    azureContainerRegistry: '{"loginServer":"mtcdensandboxdemo.azurecr.io", "id" : "/subscriptions/b0e04a4a-a321-4b66-b8fd-13715262ba3c/resourceGroups/demo-container-registry-sandbox-rg/providers/Microsoft.ContainerRegistry/registries/mtcdensandboxdemo"}'
-    action: 'Push an image'
-    imageName: '$(Build.Repository.Name)/kube-admin:$(Build.BuildId)'
+      az acr login --name mtcdensandboxdemo.azurecr.io
 
-- task: CopyFiles@2
-  displayName: 'Stage helm chart'
-  inputs:
-    SourceFolder: 'helm/kube-admin'
-    TargetFolder: '$(build.artifactstagingdirectory)/helm/kube-admin'
+      docker build . -t $(container_image_name)
+      docker tag $(container_image_name) latest
+      docker push $(container_image_name)
+      docker push latest
+
+      cp ../helm/kube-admin $(build.artifactstagingdirectory)/helm/kube-admin -R
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: drop'
