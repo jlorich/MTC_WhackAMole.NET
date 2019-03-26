@@ -1,5 +1,3 @@
-data "azurerm_subscription" "current" {}
-
 resource "azuread_application" "default" {
   name = "${var.name}-${var.environment}"
 }

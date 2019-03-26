@@ -1,42 +1,3 @@
-resource "azurerm_resource_group" "default" {
-  name     = "${var.name}-${var.environment}-rg"
-  location = "${var.location}"
-
-  tags = "${var.tags}"
-}
-
-resource "azurerm_application_insights" "default" {
-  name                = "${var.name}-ai"
-  location            = "${azurerm_resource_group.default.location}"
-  resource_group_name = "${azurerm_resource_group.default.name}"
-  application_type    = "Web"
-
-  tags = "${var.tags}"
-}
-
-resource "azurerm_log_analytics_workspace" "default" {
-  name                = "${var.name}-law"
-  location            = "${azurerm_resource_group.default.location}"
-  resource_group_name = "${azurerm_resource_group.default.name}"
-  sku                 = "PerGB2018"
-  retention_in_days   = 30
-
-  tags = "${var.tags}"
-}
-
-resource "azurerm_log_analytics_solution" "test" {
-  solution_name         = "ContainerInsights"
-  location              = "${azurerm_log_analytics_workspace.default.location}"
-  resource_group_name   = "${azurerm_resource_group.default.name}"
-  workspace_resource_id = "${azurerm_log_analytics_workspace.default.id}"
-  workspace_name        = "${azurerm_log_analytics_workspace.default.name}"
-
-  plan {
-    publisher = "Microsoft"
-    product   = "OMSGallery/ContainerInsights"
-  }
-}
-
 resource "azurerm_kubernetes_cluster" "default" {
   name                = "${var.name}-aks"
   location            = "${azurerm_resource_group.default.location}"
@@ -50,11 +11,20 @@ resource "azurerm_kubernetes_cluster" "default" {
     vm_size         = "${var.node_type}"
     os_type         = "${var.node_os}"
     os_disk_size_gb = 30
+    vnet_subnet_id  = "${azurerm_subnet.aks.id}"
   }
 
   service_principal {
     client_id     = "${azuread_application.default.application_id}"
     client_secret = "${azuread_service_principal_password.default.value}"
+  }
+
+  role_based_access_control {
+    enabled = true
+  }
+
+  network_profile {
+    network_plugin = "azure"
   }
 
   addon_profile {
@@ -66,10 +36,6 @@ resource "azurerm_kubernetes_cluster" "default" {
     http_application_routing {
       enabled = true
     }
-  }
-
-  role_based_access_control {
-    enabled = true
   }
 
   tags = "${var.tags}"

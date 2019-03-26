@@ -54,3 +54,35 @@ variable "dns_prefix" {
   description = "DNS Prefix"
   default     = "mtc-whack-a-mole"
 }
+
+// Network information
+
+variable "vnet_address_space" {
+  type = "string"
+  description = "Address space for the vnet"
+  default = "10.1.0.0/16"
+}
+
+variable "vnet_aks_subnet_space" {
+  type = "string"
+  description = "Address space for the AKS subnet"
+  default = "10.1.0.0/24"
+}
+
+variable "vnet_ingress_subnet_space" {
+  type = "string"
+  description = "Address space for the gateway subnet"
+  default = "10.1.1.0/25"
+}
+
+variable "vnet_gateway_subnet_space" {
+  type = "string"
+  description = "Address space for the gateway subnet"
+  default = "10.1.1.128/25"
+}
+
+variable "ingress_load_balancer_ip" {
+  type = "string"
+  description = "Address for the ingress controller load balancer"
+  default = "10.1.1.11"
+}

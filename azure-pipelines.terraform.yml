@@ -20,7 +20,7 @@ steps:
     terraform fmt -check=true
   displayName: Verify terraform template
 
-- script: cp * ./ $(Build.ArtifactStagingDirectory) -R
+- script: cp terraform/* ./ $(Build.ArtifactStagingDirectory) -R
   displayName: Copy terraform template to the staging directory
 
   # Publish build artifacts
