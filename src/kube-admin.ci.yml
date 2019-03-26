@@ -12,6 +12,8 @@ trigger:
     include:
       - src/WhackAMole.KubeAdmin
       - src/WhackAMole.KubeServices
+      - src/Dockerfile.KubeAdmin
+      - src/kube-admin.ci.yml
 
 variables:
   acr_name: mtcdensandboxdemo
