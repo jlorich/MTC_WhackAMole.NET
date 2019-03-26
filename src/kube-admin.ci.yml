@@ -25,18 +25,11 @@ steps:
   inputs:
     azureSubscription: 'MTC Denver Sandbox (b0e04a4a-a321-4b66-b8fd-13715262ba3c)'
     scriptLocation: inlineScript
-    failOnStandardError: true
     inlineScript: |
       # User ACR to build and tag our container
-      az acr build -r $(acr_name) -t $(image_name) -f ./src/Dockerfile.KubeAdmin ./src >> build.log
-      echo ACR BUILD - $?
-
+      az acr build -r $(acr_name) -t $(image_name) -f ./src/Dockerfile.KubeAdmin ./src
+      
       # Package the helm chart and push it to ACR
-      helm init --client-only >> build.log
-      echo HELM INIT - $?
-
-      helm package charts/kube-admin --version $(Build.BuildNumber) >> build.log
-      echo HELM PACKAGE - $?
-
-      az acr helm push -n $(acr_name) kube-admin-$(Build.BuildNumber).tgz >> build.log
-      echo HELM PUSH - $?
+      helm init --client-only
+      helm package charts/kube-admin --version $(Build.BuildNumber)
+      az acr helm push -n $(acr_name) kube-admin-$(Build.BuildNumber).tgz

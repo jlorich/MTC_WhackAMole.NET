@@ -25,7 +25,6 @@ steps:
   inputs:
     azureSubscription: 'MTC Denver Sandbox (b0e04a4a-a321-4b66-b8fd-13715262ba3c)'
     scriptLocation: inlineScript
-    failOnStandardError: true
     inlineScript: |
       # User ACR to build and tag our container
       az acr build -r $(acr_name) -t $(image_name) -f ./src/Dockerfile.MoleCloud ./src
