@@ -19,7 +19,6 @@ variables:
   acr_name: mtcdensandboxdemo
   image_name: whack-a-mole/kube-admin:$(Build.BuildNumber)
 
-
 steps:
 - task: AzureCLI@1
   displayName: 'Azure CLI '
@@ -28,11 +27,7 @@ steps:
     azureSubscription: 'MTC Denver Sandbox (b0e04a4a-a321-4b66-b8fd-13715262ba3c)'
     scriptLocation: inlineScript
     inlineScript: |
-      cd src
-      az acr build -r $(acr_name) -t $(image_name) -f Dockerfile.KubeAdmin .
-      helm package ../charts/kube-admin --version $(Build.BuildNumber)
+      az acr build -r $(acr_name) -t $(image_name) -f ./src/Dockerfile.KubeAdmin ./src
+      helm package charts/kube-admin --version $(Build.BuildNumber)
       az acr helm push -n $(acr_name) kube-admin-$(Build.BuildNumber).tgz
-
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: drop'
 

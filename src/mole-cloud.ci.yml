@@ -1,0 +1,206 @@
+name: $(Date:yyyyMMdd)$(Rev:.r)
+
+pool:
+  vmImage: 'ubuntu-16.04'
+
+trigger:
+  branches: 
+    include:
+      - master
+      - feature/terraform
+  paths:
+    include:
+      - src/WhackAMole.MoleCloud
+      - src/WhackAMole.KubeServices
+      - src/Dockerfile.MoleCloud
+      - src/mole-cloud.ci.yml
+
+variables:
+  acr_name: mtcdensandboxdemo
+  image_name: whack-a-mole/mole-cloud:$(Build.BuildNumber)
+
+steps:
+- task: AzureCLI@1
+  displayName: 'Azure CLI '
+  failOnStandardError: true
+  inputs:
+    azureSubscription: 'MTC Denver Sandbox (b0e04a4a-a321-4b66-b8fd-13715262ba3c)'
+    scriptLocation: inlineScript
+    inlineScript: |
+      az acr build -r $(acr_name) -t $(image_name) -f ./src/Dockerfile.MoleCloud ./src
+      helm package charts/mole-cloud --version $(Build.BuildNumber)
+      az acr helm push -n $(acr_name) mole-cloud-$(Build.BuildNumber).tgz
+
+
+
+# pool:
+#   name: ubuntu-16.04
+
+# trigger:
+#   branches: 
+#     include:
+#       - master
+#   paths:
+#     include:
+#       - src/WhackAMole.KubeAdmin
+#       - src/WhackAMole.KubeServices
+
+
+# jobs:
+# - job: Report Build Status - BuildingApplication
+#   server: true
+
+#   steps:
+#   - task: InvokeRESTAPI@1
+#     displayName: 'Report Build Status - BuildingApplication'
+#     inputs:
+#       serviceConnection: ReportBuildStatus
+#       headers: |
+#         {
+#           "content-type": "application/json"
+#         }
+#       body: |
+#         {
+#           "State": "BuildingApplication",
+#           "Message": "Acquiring build agent...",
+#           "ServiceName": "$(ServiceName)"
+#         }
+
+# - job: Build
+#   pool: ubuntu.
+#   steps:
+#   - task: CdiscountAlm.rest-call-build-task.custom-build-task.restCallBuildTask@0
+#     displayName: 'Report Build Status'
+#     inputs:
+#       webserviceEndpoint: ReportBuildStatus
+#       httpVerb: POST
+#       body: |
+#         {
+#           "State": "BuildingApplication",
+#           "Message": "Updating configuration files...",
+#           "ServiceName": "$(ServiceName)"
+#         }
+
+#   - task: kasunkodagoda.regex-match-replace.regex-match-replace.RegExMatchReplace@2
+#     displayName: 'Update node count'
+#     inputs:
+#       PathToFile: 'helm/mole-cloud/values.yaml'
+#       RegEx: 'replicas:[\s]+([\d]+)'
+#       ValueToReplace: 'replicas: $(pod_replica_count)'
+
+#   - task: kasunkodagoda.regex-match-replace.regex-match-replace.RegExMatchReplace@2
+#     displayName: 'Update service name'
+#     inputs:
+#       PathToFile: 'helm/mole-cloud/values.yaml'
+#       RegEx: 'name:[\s]+([a-zA-z0-9-_]+)'
+#       ValueToReplace: 'name: $(service_name)'
+
+#   - task: CdiscountAlm.rest-call-build-task.custom-build-task.restCallBuildTask@0
+#     displayName: 'Report Build Status'
+#     inputs:
+#       webserviceEndpoint: ReportBuildStatus
+#       httpVerb: POST
+#       body: |
+#         {
+#           "State": "BuildingApplication",
+#           "Message": "Publishing ASP.NET Core application...",
+#           "ServiceName": "$(ServiceName)"
+#         }
+
+#   - task: DotNetCoreCLI@2
+#     displayName: 'dotnet publish'
+#     inputs:
+#       command: publish
+#       publishWebProjects: false
+#       projects: WhackAMole.MoleCloud/WhackAMole.MoleCloud.csproj
+#       arguments: '-c Release -o "./obj/Docker/publish"'
+#       zipAfterPublish: false
+#       modifyOutputPath: false
+
+#   - task: CdiscountAlm.rest-call-build-task.custom-build-task.restCallBuildTask@0
+#     displayName: 'Report Build Status'
+#     inputs:
+#       webserviceEndpoint: ReportBuildStatus
+#       httpVerb: POST
+#       body: |
+#         {
+#           "State": "BuildingApplication",
+#           "Message": "Building Docker container...",
+#           "ServiceName": "$(ServiceName)"
+#         }
+
+#   - task: Docker@0
+#     displayName: 'Build an image'
+#     inputs:
+#       azureSubscription: 'MTC Denver Sandbox (b0e04a4a-a321-4b66-b8fd-13715262ba3c)'
+#       azureContainerRegistry: '{"loginServer":"mtcdensandboxdemo.azurecr.io", "id" : "/subscriptions/b0e04a4a-a321-4b66-b8fd-13715262ba3c/resourceGroups/demo-container-registry-sandbox-rg/providers/Microsoft.ContainerRegistry/registries/mtcdensandboxdemo"}'
+#       dockerFile: WhackAMole.MoleCloud/Dockerfile
+#       buildArguments: 'pod_color=$(pod_color)'
+#       imageName: '$(Build.Repository.Name)/mole-cloud:$(Build.BuildId)'
+#       workingDirectory: WhackAMole.MoleCloud
+
+#   - task: CdiscountAlm.rest-call-build-task.custom-build-task.restCallBuildTask@0
+#     displayName: 'Report Build Status'
+#     inputs:
+#       webserviceEndpoint: ReportBuildStatus
+#       httpVerb: POST
+#       body: |
+#         {
+#           "State": "PublishingContainer",
+#           "Message": "Pushing docker image to Azure Container Registry...",
+#           "ServiceName": "$(ServiceName)"
+#         }
+
+#   - task: Docker@0
+#     displayName: 'Push an image'
+#     inputs:
+#       azureSubscription: 'MTC Denver Sandbox (b0e04a4a-a321-4b66-b8fd-13715262ba3c)'
+#       azureContainerRegistry: '{"loginServer":"mtcdensandboxdemo.azurecr.io", "id" : "/subscriptions/b0e04a4a-a321-4b66-b8fd-13715262ba3c/resourceGroups/demo-container-registry-sandbox-rg/providers/Microsoft.ContainerRegistry/registries/mtcdensandboxdemo"}'
+#       action: 'Push an image'
+#       imageName: '$(Build.Repository.Name)/mole-cloud:$(Build.BuildId)'
+
+#   - task: CdiscountAlm.rest-call-build-task.custom-build-task.restCallBuildTask@0
+#     displayName: 'Report Build Status copy'
+#     inputs:
+#       webserviceEndpoint: ReportBuildStatus
+#       httpVerb: POST
+#       body: |
+#         {
+#           "State": "PublishingContainer",
+#           "Message": "Publishing build artifacts...",
+#           "ServiceName": "$(ServiceName)"
+#         }
+
+#   - task: CopyFiles@2
+#     displayName: 'Stage helm chart'
+#     inputs:
+#       SourceFolder: 'helm/mole-cloud'
+#       TargetFolder: '$(build.artifactstagingdirectory)/helm/mole-cloud'
+
+#   - task: PublishBuildArtifacts@1
+#     displayName: 'Publish Artifact: drop'
+
+#   - task: CdiscountAlm.rest-call-build-task.custom-build-task.restCallBuildTask@0
+#     displayName: 'Report Build Status'
+#     inputs:
+#       webserviceEndpoint: ReportBuildStatus
+#       httpVerb: POST
+#       body: |
+#         {
+#           "State": "UpgradingCluster",
+#           "Message": "Acquiring release agent...",
+#           "ServiceName": "$(ServiceName)"
+#         }
+
+#   - task: CdiscountAlm.rest-call-build-task.custom-build-task.restCallBuildTask@0
+#     displayName: 'Report Build Failure'
+#     inputs:
+#       webserviceEndpoint: ReportBuildStatus
+#       httpVerb: POST
+#       body: |
+#         {
+#           "State": "Failed",
+#           "Message": "The build failed to complete",
+#           "ServiceName": "$(ServiceName)"
+#         }
+#     condition: failed()
