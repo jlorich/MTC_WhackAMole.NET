@@ -14,12 +14,15 @@ trigger:
       - auzre-pipelines.terraform.yml
 
 steps:
-- task: AzureCLI@1
-  displayName: 'Azure CLI '
-  inputs:
-    azureSubscription: 'MTC Denver Sandbox (b0e04a4a-a321-4b66-b8fd-13715262ba3c)'
-    scriptLocation: inlineScript
-    inlineScript: |
-      cd ./terraform
-      terraform init
-      terraform plan -f out.tfplan
+# Verify template and generate terraform plan
+- script: |
+    cd terraform
+    terraform fmt -check=true
+  displayName: Verify terraform template
+
+- script: cp * ./ $(Build.ArtifactStagingDirectory) -R
+  displayName: Copy terraform template to the staging directory
+
+  # Publish build artifacts
+- task: PublishBuildArtifacts@1
+

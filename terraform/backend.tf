@@ -4,4 +4,3 @@ terraform {
     key            = "${var.name}-${var.environment}.tfstate"
   }
 }
-
