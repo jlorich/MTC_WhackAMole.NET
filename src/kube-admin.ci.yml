@@ -7,6 +7,7 @@ trigger:
   branches: 
     include:
       - master
+      - feature/terraform
   paths:
     include:
       - src/WhackAMole.KubeAdmin
