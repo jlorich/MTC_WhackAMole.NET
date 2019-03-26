@@ -14,7 +14,7 @@ resource azurerm_network_security_group "aks" {
 }
 
 resource "azurerm_subnet" "aks" {
-  name                      = "{var.name}-aks-subnet"
+  name                      = "${var.name}-aks-subnet"
   resource_group_name       = "${azurerm_resource_group.default.name}"
   network_security_group_id = "${azurerm_network_security_group.aks.id}"
   address_prefix            = "${var.vnet_aks_subnet_space}"
