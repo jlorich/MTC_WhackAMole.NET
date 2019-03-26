@@ -24,7 +24,7 @@ steps:
     azureSubscription: 'MTC Denver Sandbox (b0e04a4a-a321-4b66-b8fd-13715262ba3c)'
     scriptLocation: inlineScript
     inlineScript: |
-      az acr-build --registry $(acr_name) --image $(image_name) -f Dockerfile.KubeAdmin
+      az acr build --registry $(acr_name) --image $(image_name) -f Dockerfile.KubeAdmin
       helm package .charts/kube-admin --version $(Build.BuildNumber)
       az acr helm push -n $(acr_name) kube-admin-$(Build.BuildNumber).tgz
 
