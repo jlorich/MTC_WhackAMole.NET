@@ -17,20 +17,16 @@ resource "helm_release" "ingress" {
   chart     = "stable/nginx-ingress"
   namespace = "kube-system"
 
-  set {
-    name  = "controller.replicaCount"
-    value = 2
-  }
-
-  set {
-    name  = "controller.service.loadBlancerIP"
-    value = "${var.ingress_load_balancer_ip}"
-  }
-
-  set {
-    name  = "controller.service.annotations.service.beta.kubernetes.io/azure-load-balancer-internal"
-    value = "true"
-  }
+  values = [<<EOF
+controller:
+  replicaCount: 2
+  service:
+    loadBalancerIP: ${var.ingress_load_balancer_ip}
+    annotations:
+      service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+      service.beta.kubernetes.io/azure-load-balancer-internal-subnet: "${azurerm_network_security_group.ingress.name}"
+EOF
+  ]
 
   depends_on = ["kubernetes_cluster_role_binding.tiller"]
 }
