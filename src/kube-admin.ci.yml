@@ -17,7 +17,7 @@ trigger:
 
 variables:
   acr_name: mtcdensandboxdemo
-  image_name: $(Build.Repository.Name)/kube-admin:$(Build.BuildNumber)
+  image_name: whack-a-mole/kube-admin:$(Build.BuildNumber)
 
 
 steps:
@@ -28,7 +28,7 @@ steps:
     scriptLocation: inlineScript
     inlineScript: |
       cd src
-      az acr build --registry $(acr_name) --image $(image_name) -f Dockerfile.KubeAdmin .
+      az acr build -r $(acr_name) -t $(image_name) -f Dockerfile.KubeAdmin .
       helm package ../charts/kube-admin --version $(Build.BuildNumber)
       az acr helm push -n $(acr_name) kube-admin-$(Build.BuildNumber).tgz
 
