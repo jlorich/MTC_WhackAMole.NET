@@ -1,0 +1,17 @@
+FROM microsoft/dotnet:sdk AS build-env
+WORKDIR /app
+
+COPY WhackAMole.KubeAdmin/*.csproj ./WhackAMole.KubeAdmin/
+COPY WhackAMole.KubeServices/*.csproj ./WhackAMole.KubeServices/
+RUN dotnet restore ./WhackAMole.KubeAdmin/WhackAMole.KubeAdmin.csproj
+
+COPY . ./
+
+RUN dotnet publish ./WhackAMole.KubeAdmin/WhackAMole.KubeAdmin.csproj -c Release -o out
+
+
+FROM microsoft/dotnet:aspnetcore-runtime
+WORKDIR /app
+EXPOSE 8080
+COPY --from=build-env /app/WhackAMole.KubeAdmin/out .
+ENTRYPOINT ["dotnet", "WhackAMole.KubeAdmin.dll", "--urls", "http://*:8080"]
