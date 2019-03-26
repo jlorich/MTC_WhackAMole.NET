@@ -1,0 +1,25 @@
+name: $(Date:yyyyMMdd)$(Rev:.r)
+
+pool:
+  vmImage: 'ubuntu-16.04'
+
+trigger:
+  branches: 
+    include:
+      - master
+      - feature/terraform
+  paths:
+    include:
+      - terraform
+      - auzre-pipelines.terraform.yml
+
+steps:
+- task: AzureCLI@1
+  displayName: 'Azure CLI '
+  inputs:
+    azureSubscription: 'MTC Denver Sandbox (b0e04a4a-a321-4b66-b8fd-13715262ba3c)'
+    scriptLocation: inlineScript
+    inlineScript: |
+      cd ./terraform
+      terraform init
+      terraform plan -f out.tfplan

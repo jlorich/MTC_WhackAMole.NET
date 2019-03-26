@@ -1,7 +1,7 @@
-# terraform {
-#   backend "azurerm" {
-#     container_name = "tfstate"
-#     key            = "whack-a-mole-aks.tfstate"
-#   }
-# }
+terraform {
+  backend "azurerm" {
+    container_name = "tfstate"
+    key            = "${var.name}-${var.environment}.tfstate"
+  }
+}
 

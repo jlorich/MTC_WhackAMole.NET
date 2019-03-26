@@ -2,7 +2,7 @@
 variable "name" {
   type        = "string"
   description = "Location of the azure resource group."
-  default     = "mtc-whack-a-mole"
+  default     = "demo-whack-a-mole"
 }
 
 variable "environment" {

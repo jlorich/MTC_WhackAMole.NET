@@ -13,10 +13,9 @@ trigger:
       - src/WhackAMole.MoleCloud
       - src/WhackAMole.KubeServices
       - src/Dockerfile.MoleCloud
-      - src/mole-cloud.ci.yml
+      - azure-pipelines.mole-cloud.yml
 
 variables:
-  acr_name: mtcdensandboxdemo
   image_name: whack-a-mole/mole-cloud:$(Build.BuildNumber)
 
 steps:
