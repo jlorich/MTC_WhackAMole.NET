@@ -28,9 +28,9 @@ steps:
     failOnStandardError: true
     inlineScript: |
       # User ACR to build and tag our container
-      az acr build -r $(acr_name) -t $(image_name) -f ./src/Dockerfile.KubeAdmin ./src > docker.log
+      az acr build -r $(acr_name) -t $(image_name) -f ./src/Dockerfile.KubeAdmin ./src >> build.log
 
       # Package the helm chart and push it to ACR
-      helm init --client-only
-      helm package charts/kube-admin --version $(Build.BuildNumber)
-      az acr helm push -n $(acr_name) kube-admin-$(Build.BuildNumber).tgz
+      helm init --client-only >> build.log
+      helm package charts/kube-admin --version $(Build.BuildNumber) >> build.log
+      az acr helm push -n $(acr_name) kube-admin-$(Build.BuildNumber).tgz >> build.log
