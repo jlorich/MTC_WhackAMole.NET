@@ -3,6 +3,10 @@ name: $(Date:yyyyMMdd)$(Rev:.r)
 pool:
   vmImage: 'ubuntu-16.04'
 
+variables:
+  acr_name: mtcdensandboxdemo
+  image_name: whack-a-mole/kube-admin:$(Build.BuildNumber)
+
 steps:
 - task: AzureCLI@1
   displayName: 'Azure CLI '
