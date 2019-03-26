@@ -1,3 +1,5 @@
+name: $(Date:yyyyMMdd)$(Rev:.r)
+
 pool:
   vmImage: 'ubuntu-16.04'
 
@@ -12,8 +14,8 @@ trigger:
 
 variables:
   acr_name: mtcdensandboxdemo
-  registry: $(mtcdensandboxdemo).azurecr.io
-  container_image_name: $(registry)/$(Build.Repository.Name)/kube-admin:$(Build.BuildId)
+  registry: $(acr_name).azurecr.io
+  image_name: $(registry)/$(Build.Repository.Name)/kube-admin:$(Build.BuildNumber)
 
 
 steps:
@@ -25,16 +27,12 @@ steps:
     inlineScript: |
       cd src/WhackAMole.KubeAdmin
       dotnet publish WhackAMole.KubeAdmin.csproj -c Release -o "./obj/Docker/Publish"
+      az acr-build --registry $(acr_name) --image $(image_name)
 
-      az acr login --name $(acr_name)
+      cd ../../
 
-      docker build . -t $(container_image_name)
-      docker tag $(container_image_name) latest
-      docker push $(container_image_name)
-      docker push latest
-
-      mkdir -p $(build.artifactstagingdirectory)/charts
-      cp ../../charts/kube-admin $(build.artifactstagingdirectory)/charts/kube-admin -R
+      helm package .charts/kube-admin --version $(Build.BuildNumber)
+      az acr helm push -n $(acr_name) kube-admin-$(Build.BuildNumber).tgz
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: drop'
