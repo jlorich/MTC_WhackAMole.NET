@@ -13,6 +13,7 @@ trigger:
       - src/WhackAMole.MoleCloud
       - src/WhackAMole.KubeServices
       - src/Dockerfile.MoleCloud
+      - charts/mole-cloud
       - azure-pipelines.mole-cloud.yml
 
 variables:

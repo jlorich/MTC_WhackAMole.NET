@@ -13,6 +13,7 @@ trigger:
       - src/WhackAMole.KubeAdmin
       - src/WhackAMole.KubeServices
       - src/Dockerfile.KubeAdmin
+      - charts/kube-admin
       - azure-pipelines.kube-admin.yml
 
 variables:
