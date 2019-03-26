@@ -27,7 +27,10 @@ steps:
     scriptLocation: inlineScript
     failOnStandardError: true
     inlineScript: |
+      # User ACR to build and tag our container
       az acr build -r $(acr_name) -t $(image_name) -f ./src/Dockerfile.MoleCloud ./src
+      
+      # Package the helm chart and push it to ACR
       helm init --client-only
       helm package charts/mole-cloud --version $(Build.BuildNumber)
       az acr helm push -n $(acr_name) mole-cloud-$(Build.BuildNumber).tgz
