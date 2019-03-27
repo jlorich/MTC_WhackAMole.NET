@@ -18,6 +18,5 @@ ENV POD_COLOR=$pod_color
 WORKDIR /app
 EXPOSE 8080
 
-
 COPY --from=build-env /app/WhackAMole.MoleCloud/out .
 ENTRYPOINT ["dotnet", "WhackAMole.MoleCloud.dll", "--urls", "http://*:8080"]
