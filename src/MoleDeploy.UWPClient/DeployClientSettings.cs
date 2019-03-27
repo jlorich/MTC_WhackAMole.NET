@@ -2,13 +2,11 @@
 {
     public class DeployClientSettings
     {
-        public string DeployFunctionEndpoint { get; set; }
+        public string DeploymentStartEndpoint { get; set; }
 
-        public string SignalREndpoint { get; set; }
+        public string AzureSignalRConnectionString { get; set; }
 
-        public string SignalRAccessKey { get; set; }
-
-        public string SignalRHubName { get; set; }
+        public string AzureSignalRHubName { get; set; }
 
         public string ServiceName { get; set; }
     }

@@ -1,7 +1,0 @@
-{
-  "profiles": {
-    "MoleDeploy.VstsCore": {
-      "commandName": "Project"
-    }
-  }
-}

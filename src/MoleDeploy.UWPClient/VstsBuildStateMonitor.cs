@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.SignalR.Client;
 using MoleDeploy.Contracts;
-using Newtonsoft.Json;
-using MoleDeploy.SignalR;
 using System.Threading.Tasks;
 
 namespace MoleDeploy.UWPClient
@@ -20,19 +17,21 @@ namespace MoleDeploy.UWPClient
 
         private HubConnection _Connection;
 
-        public VstsBuildStateMonitor(string endpoint, string accessKey, string hubName)
+        public VstsBuildStateMonitor(string azureSignalRConnectionString, string hubName)
         {
-            var signalR = new AzureSignalR($"Endpoint={endpoint};AccessKey={accessKey}");
+            var signalR = new AzureSignalR(azureSignalRConnectionString);
             var hubUrl = signalR.GetClientHubUrl(hubName);
             var token = signalR.GenerateAccessToken(hubName);
 
             _Connection = new HubConnectionBuilder()
             .WithUrl(hubUrl, options => {
-                options.Headers = new Dictionary<string, string> { { "Authorization", string.Format("bearer {0}", token) } };
-            })
-            .Build();
+                options.AccessTokenProvider = () =>
+                 {
+                     return Task.FromResult(signalR.GenerateAccessToken(hubName));
+                 };
+            }).Build();
 
-            _Connection.On<VstsBuildStateChangeNotification>("StatusUpdate", (noticifation) =>
+            _Connection.On<VstsBuildStateChangeNotification>("StatusChanged", (noticifation) =>
             {
                 ProcessStateChangeNotification(noticifation);
             });

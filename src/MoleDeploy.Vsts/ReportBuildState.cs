@@ -1,39 +1,37 @@
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+using System;
+using System.IO;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.Azure.WebJobs.Host;
-using Microsoft.Extensions.Configuration;
-using MoleDeploy.Contracts;
-using MoleDeploy.SignalR;
+using Microsoft.Azure.WebJobs.Extensions.SignalRService;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using MoleDeploy.Contracts;
+using Microsoft.Extensions.Configuration;
 
 namespace MoleDeploy.Vsts.Functions
 {
     public static class ReportBuildState
     {
         [FunctionName("ReportBuildState")]
-        public static async Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)]HttpRequestMessage req, TraceWriter log, ExecutionContext context)
+        public static async Task<IActionResult> Run(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequest request,
+            [SignalR(HubName="MoleDeploy")] IAsyncCollector<SignalRMessage> signalRMessages)
         {
-            var config = new ConfigurationBuilder()
-                .SetBasePath(context.FunctionAppDirectory)
-                .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
-                .AddEnvironmentVariables()
-                .Build();
-
-            var body = await req.Content.ReadAsStringAsync();
+            var body = new StreamReader(request.Body).ReadToEnd();
             var notification = JsonConvert.DeserializeObject<VstsBuildStateChangeNotification>(body);
 
-            var endpoint = config["SignalR:Endpoint"];
-            var accessKey = config["SignalR:AccessKey"];
+            await signalRMessages.AddAsync(
+                new SignalRMessage {
+                    Target = "StatusChanged",
+                    Arguments = new[] { notification }
+                }
+            );
 
-            var signalR = new AzureSignalR($"Endpoint={endpoint};AccessKey={accessKey}");
-
-            var result = await signalR.SendAsync(config["SignalR:HubName"], "StatusUpdate", notification);
-
-            return req.CreateResponse(HttpStatusCode.OK);
+            return new OkResult();
         }
     }
 }

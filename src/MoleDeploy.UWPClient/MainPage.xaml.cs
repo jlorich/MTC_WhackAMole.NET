@@ -19,7 +19,6 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Animation;
 using MoleDeploy.Contracts;
 using System.Net.Http;
-using MoleDeploy.Vsts;
 using Newtonsoft.Json;
 using System.Text;
 using System.Drawing;
@@ -75,7 +74,7 @@ namespace MoleDeploy.UWPClient
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            buildStateMonitor = new VstsBuildStateMonitor(Settings.SignalREndpoint, Settings.SignalRAccessKey, Settings.SignalRHubName);
+            buildStateMonitor = new VstsBuildStateMonitor(Settings.AzureSignalRConnectionString, Settings.AzureSignalRHubName);
             buildStateMonitor.OnStateBegin += OnStateBegin;
             buildStateMonitor.OnStateEnd += OnStateEnd;
 
@@ -145,6 +144,7 @@ namespace MoleDeploy.UWPClient
                         button_Deploy.IsEnabled = true;
                         return;
                     case VstsBuildState.Failed:
+                    case VstsBuildState.Unknown:
                         SetAllColors(STATE_FAILED_COLOR);
                         button_Deploy.IsEnabled = true;
                         return;
@@ -281,8 +281,8 @@ namespace MoleDeploy.UWPClient
 
                 var request = new SubmitBuildRequest()
                 {
-                    Color = colorString,
-                    ReplicaCount = SelectedReplicaCount,
+                    PodColor = colorString,
+                    PodReplicaCount = SelectedReplicaCount,
                     ServiceName = Settings.ServiceName
                 };
 
@@ -290,7 +290,7 @@ namespace MoleDeploy.UWPClient
                 var client = new HttpClient();
                 var content = new StringContent(body, Encoding.UTF8, "application/json");
 
-                var result = await client.PostAsync(Settings.DeployFunctionEndpoint, content);
+                var result = await client.PostAsync(Settings.DeploymentStartEndpoint, content);
                 var resultBody = result.Content.ReadAsStringAsync();
             } catch (Exception e)
             {

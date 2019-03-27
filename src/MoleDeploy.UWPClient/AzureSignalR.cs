@@ -12,7 +12,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MoleDeploy.SignalR
+namespace MoleDeploy.UWPClient
 {
     public class AzureSignalR
     {
@@ -53,6 +53,7 @@ namespace MoleDeploy.SignalR
                 subject: subject,
                 expires: expires,
                 signingCredentials: credentials);
+
             return jwtTokenHandler.WriteToken(token);
         }
 
@@ -80,26 +81,14 @@ namespace MoleDeploy.SignalR
             ParseConnectionString(connectionString, out endpoint, out accessKey);
         }
 
-        public async Task<HttpResponseMessage> SendAsync(string hubName, string methodName, params object[] args)
-        {
-            var payload = new PayloadMessage()
-            {
-                Target = methodName,
-                Arguments = args
-            };
-            var url = $"{endpoint}:5002/api/v1-preview/hub/{hubName}";
-            var bearer = GenerateJwtBearer(null, url, null, DateTime.UtcNow.AddMinutes(30), accessKey);
-            return await PostJsonAsync(url, payload, bearer);
-        }
-
         public string GetClientHubUrl(string hubName)
         {
-            return $"{endpoint}:5001/client/?hub={hubName}";
+            return $"{endpoint}/client/?hub={hubName}";
         }
 
         public string GenerateAccessToken(string hubName)
         {
-            return GenerateJwtBearer(null, GetClientHubUrl(hubName), null, DateTime.UtcNow.AddMinutes(30), accessKey);
+            return GenerateJwtBearer(null, GetClientHubUrl(hubName), null, null, accessKey);
         }
     }
 }

@@ -18,7 +18,7 @@ resource "azuread_service_principal_password" "default" {
 }
 
 resource "azurerm_role_assignment" "default" {
-  scope                = "${data.azurerm_subscription.current.id}"
-  role_definition_name = "Contributor"
+  scope                = "${data.azurerm_subscription.current.id}/resourceGroups/${azurerm_resource_group.default.name}"
+  role_definition_name = "Network Contributor"
   principal_id         = "${azuread_service_principal.default.id}"
 }
