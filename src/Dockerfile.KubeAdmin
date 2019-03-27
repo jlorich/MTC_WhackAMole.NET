@@ -7,7 +7,7 @@ RUN dotnet restore ./WhackAMole.KubeAdmin/WhackAMole.KubeAdmin.csproj
 
 COPY . ./
 
-RUN dotnet publish ./WhackAMole.KubeAdmin/WhackAMole.KubeAdmin.csproj -c Release -o out
+RUN dotnet publish ./WhackAMole.KubeAdmin/WhackAMole.KubeAdmin.csproj -c Debug -o out
 
 
 FROM microsoft/dotnet:aspnetcore-runtime

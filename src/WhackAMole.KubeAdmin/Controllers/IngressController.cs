@@ -16,6 +16,9 @@ namespace WhackAMole.KubeAdmin.Controllers
     [Route("api/[controller]")]
     public class IngressController : Controller
     {
+
+        protected readonly string API_VERSION = "apis/extensions/v1beta1";
+
         private readonly IAuthenticationProvider _auth;
         private readonly IngressRequest _ingressRequest;
 
@@ -30,8 +33,8 @@ namespace WhackAMole.KubeAdmin.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            try
-            {
+            //try
+            //{
                 var list = await _ingressRequest.GetAllAsync();
 
                 if (list == null || list.Length == 0)
@@ -46,11 +49,11 @@ namespace WhackAMole.KubeAdmin.Controllers
                 }
 
                 return new OkObjectResult(nodes);
-            }
-            catch (Exception)
-            {
-                return new NotFoundResult();
-            }
+            //}
+            //catch (Exception)
+            //{
+            //    return new NotFoundResult();
+            //}
         }
     }
 }

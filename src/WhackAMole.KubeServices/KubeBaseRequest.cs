@@ -15,7 +15,7 @@ namespace WhackAMole.KubeServices
     public class KubeBaseRequest<T> : IKubeRequest where T : IKubeResource
     {
 
-        const string API_VERSION = "api/v1";
+        protected readonly string API_VERSION = "api/v1";
 
         private readonly IAuthenticationProvider _auth;
         private readonly KubeOptions _settings;
@@ -37,7 +37,7 @@ namespace WhackAMole.KubeServices
 
         protected async Task<T> GetAsync<T>(string api, string nameSpace = "", KeyValuePair<string, string>[] queryvalues = null) where T : class
         {
-            var json = await GetAsync(api, queryvalues: queryvalues);
+            var json = await GetAsync(api, queryvalues: queryvalues, nameSpace: nameSpace);
             return JsonConvert.DeserializeObject<T>(json);
         }
 

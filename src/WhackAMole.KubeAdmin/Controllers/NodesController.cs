@@ -29,8 +29,8 @@ namespace WhackAMole.KubeAdmin.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            try
-            {
+            // try
+            // {
                 var list = await _nodesRequest.GetAllAsync();
 
                 if (list == null || list.Length == 0)
@@ -41,11 +41,11 @@ namespace WhackAMole.KubeAdmin.Controllers
                     nodes.Add(new Node { Name = node.MetaData.Name, Uid = node.MetaData.Uid });
 
                 return new OkObjectResult(nodes);
-            }
-            catch (Exception)
-            {
-                return new NotFoundResult();
-            }
+            // }
+            // catch (Exception)
+            // {
+            //     return new NotFoundResult();
+            // }
         }
     }
 }
