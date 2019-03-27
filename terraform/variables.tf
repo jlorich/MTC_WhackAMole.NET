@@ -60,25 +60,25 @@ variable "dns_prefix" {
 variable "vnet_address_space" {
   type        = "string"
   description = "Address space for the vnet"
-  default     = "10.1.0.0/16"
+  default     = "10.0.0.0/8"
 }
 
 variable "vnet_aks_subnet_space" {
   type        = "string"
   description = "Address space for the AKS subnet"
-  default     = "10.0.0.0/16"
+  default     = "10.1.0.0/16"
 }
 
 variable "vnet_ingress_subnet_space" {
   type        = "string"
   description = "Address space for the gateway subnet"
-  default     = "10.1.0.0/24"
+  default     = "10.2.0.0/24"
 }
 
 variable "vnet_gateway_subnet_space" {
   type        = "string"
   description = "Address space for the gateway subnet"
-  default     = "10.1.1.0/24"
+  default     = "10.2.1.0/24"
 }
 
 variable "ingress_load_balancer_ip" {

@@ -1,5 +1,5 @@
 resource "azurerm_application_insights" "default" {
-  name                = "${var.name}-ai"
+  name                = "${var.name}-${var.environment}-ai"
   location            = "${azurerm_resource_group.default.location}"
   resource_group_name = "${azurerm_resource_group.default.name}"
   application_type    = "Web"
@@ -8,7 +8,7 @@ resource "azurerm_application_insights" "default" {
 }
 
 resource "azurerm_log_analytics_workspace" "default" {
-  name                = "${var.name}-law"
+  name                = "${var.name}-${var.environment}-law"
   location            = "${azurerm_resource_group.default.location}"
   resource_group_name = "${azurerm_resource_group.default.name}"
   sku                 = "PerGB2018"
