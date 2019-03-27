@@ -23,6 +23,7 @@ using Newtonsoft.Json;
 using System.Text;
 using System.Drawing;
 using Windows.UI.Xaml.Shapes;
+using System.Timers;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -36,6 +37,7 @@ namespace MoleDeploy.UWPClient
         private CancellationTokenSource animationCancellationTokenSource;
         private VstsBuildStateMonitor buildStateMonitor;
 
+        private Color STATE_DEFAULT_COLOR = Color.FromArgb(0xFF, 0x1D, 0xAD, 0xD8);
         private Color STATE_COMPLETE_COLOR = Color.FromArgb(0xFF, 0x47, 0x8e, 0x53);
         private Color STATE_ACTIVE_COLOR = Color.FromArgb(0xFF, 0x1D, 0xAD, 0xD8);
         private Color STATE_INACTIVE_COLOR = Color.FromArgb(0xFF, 0xA0, 0xA0, 0xA0);
@@ -48,6 +50,8 @@ namespace MoleDeploy.UWPClient
 
         private const string SETTINGS_FILE_LOCATION = "appsettings.json";
         private DeployClientSettings _Settings;
+
+        private System.Timers.Timer _DeploymentTimer;
 
         private DeployClientSettings Settings
         {
@@ -277,6 +281,12 @@ namespace MoleDeploy.UWPClient
             
             try
             {
+                // Ensure we have a timer going so after 10 minutes the state resets back to normal
+                _DeploymentTimer = new System.Timers.Timer(1000*60*10);
+                _DeploymentTimer.Elapsed += OnDeploymentTimerElapsed;
+                _DeploymentTimer.AutoReset = false;
+                _DeploymentTimer.Enabled = true;
+
                 var colorString = Color.FromArgb(SelectedColor.A, SelectedColor.R, SelectedColor.G, SelectedColor.B).ToArgb().ToString("X8").Substring(2, 6);
 
                 var request = new SubmitBuildRequest()
@@ -296,6 +306,24 @@ namespace MoleDeploy.UWPClient
             {
                 OnStateBegin(this, VstsBuildState.Failed, e.Message);
             }
+        }
+
+        private async void OnDeploymentTimerElapsed(Object source, ElapsedEventArgs e)
+        {
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+            {
+                _CurrentState = VstsBuildState.Unknown;
+
+                if (animationCancellationTokenSource != null)
+                {
+                    animationCancellationTokenSource.Cancel();
+                    animationCancellationTokenSource = null;
+                }
+
+                SetAllColors(STATE_DEFAULT_COLOR);
+
+                button_Deploy.IsEnabled = true;
+            });
         }
 
         private void ColorChanged(object sender, RoutedEventArgs e)
