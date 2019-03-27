@@ -8,26 +8,25 @@ resource "azurerm_virtual_network" "default" {
 
 # Subnets
 resource "azurerm_subnet" "aks" {
-  name                      = "${var.name}-aks-subnet"
-  resource_group_name       = "${azurerm_resource_group.default.name}"
-  address_prefix            = "${var.vnet_aks_subnet_space}"
-  virtual_network_name      = "${azurerm_virtual_network.default.name}"
+  name                 = "${var.name}-aks-subnet"
+  resource_group_name  = "${azurerm_resource_group.default.name}"
+  address_prefix       = "${var.vnet_aks_subnet_space}"
+  virtual_network_name = "${azurerm_virtual_network.default.name}"
 }
 
 resource "azurerm_subnet" "ingress" {
-  name                      = "${var.name}-ingress-subnet"
-  resource_group_name       = "${azurerm_resource_group.default.name}"
-  virtual_network_name      = "${azurerm_virtual_network.default.name}"
-  address_prefix            = "${var.vnet_ingress_subnet_space}"
+  name                 = "${var.name}-ingress-subnet"
+  resource_group_name  = "${azurerm_resource_group.default.name}"
+  virtual_network_name = "${azurerm_virtual_network.default.name}"
+  address_prefix       = "${var.vnet_ingress_subnet_space}"
 }
 
 resource "azurerm_subnet" "gateway" {
-  name                      = "${var.name}-gateway-subnet"
-  resource_group_name       = "${azurerm_resource_group.default.name}"
-  virtual_network_name      = "${azurerm_virtual_network.default.name}"
-  address_prefix            = "${var.vnet_gateway_subnet_space}"
+  name                 = "${var.name}-gateway-subnet"
+  resource_group_name  = "${azurerm_resource_group.default.name}"
+  virtual_network_name = "${azurerm_virtual_network.default.name}"
+  address_prefix       = "${var.vnet_gateway_subnet_space}"
 }
-
 
 # Network security groups
 resource azurerm_network_security_group "aks" {
