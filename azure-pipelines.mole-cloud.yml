@@ -20,31 +20,52 @@ variables:
   image_name: whack-a-mole/mole-cloud:$(Build.BuildNumber)
   report_url: https://demo-whack-a-mole-dev-func.azurewebsites.net/api/ReportBuildState
 
-steps:
-- task: AzureCLI@1
-  displayName: 'Azure CLI '
-  inputs:
-    azureSubscription: 'MTC Denver Sandbox (b0e04a4a-a321-4b66-b8fd-13715262ba3c)'
-    scriptLocation: inlineScript
-    inlineScript: |
+jobs:
+- job: Report Build Status - BuildingApplication
+  server: true
 
-      # User ACR to build and tag our container
-      curl -d "{\"State\": 1, \"Message\": \"Executing ACR Build\", \"ServiceName\": \"mtcden\"}" -X POST $(report_url)
-      az acr build -r $(acr_name) -t $(image_name) -f ./src/Dockerfile.MoleCloud --build-arg "pod_color=$(pod_color)" ./src
-      
-      # Package the helm chart and push it to ACR
-      curl -d "{\"State\": 2, \"Message\": \"Initializing Helm\", \"ServiceName\": \"mtcden\"}" -X POST $(report_url)
-      helm init --client-only
+  steps:
+  - task: InvokeRESTAPI@1
+    displayName: 'Report Build Status - BuildingApplication'
+    inputs:
+      serviceConnection: 'Report Build Status: demo-whack-a-mole-dev'
+      headers: |
+        {
+          "content-type": "application/json"
+        }
+      body: |
+        {
+          "State": "1",
+          "Message": "Acquiring build agent...",
+          "ServiceName": "$(ServiceName)"
+        }
 
-      curl -d "{\"State\": 2, \"Message\": \"Packaging Helm Chart\", \"ServiceName\": \"mtcden\"}" -X POST $(report_url)
-      helm package charts/mole-cloud --version $(Build.BuildNumber)
+- job: Build Application
+  steps:
+  - task: AzureCLI@1
+    displayName: 'Azure CLI '
+    inputs:
+      azureSubscription: 'MTC Denver Sandbox (b0e04a4a-a321-4b66-b8fd-13715262ba3c)'
+      scriptLocation: inlineScript
+      inlineScript: |
 
-      curl -d "{\"State\": 2, \"Message\": \"Pushing Helm chart to ACR\", \"ServiceName\": \"mtcden\"}" -X POST $(report_url)
-      az acr helm push -n $(acr_name) mole-cloud-$(Build.BuildNumber).tgz
+        # User ACR to build and tag our container
+        curl -d "{\"State\": 1, \"Message\": \"Executing ACR Build...\", \"ServiceName\": \"mtcden\"}" -X POST $(report_url)
+        az acr build -r $(acr_name) -t $(image_name) -f ./src/Dockerfile.MoleCloud --build-arg "pod_color=$(pod_color)" ./src
+        
+        # Package the helm chart and push it to ACR
+        curl -d "{\"State\": 2, \"Message\": \"Initializing Helm...\", \"ServiceName\": \"mtcden\"}" -X POST $(report_url)
+        helm init --client-only
 
-- script: |
-    curl -d "{\"State\": 5, \"Message\": \"Error Building Application\", \"ServiceName\": \"mtcden\"}" -X POST $(report_url)
-  condition: failed()
+        curl -d "{\"State\": 2, \"Message\": \"Packaging Helm Chart...\", \"ServiceName\": \"mtcden\"}" -X POST $(report_url)
+        helm package charts/mole-cloud --version $(Build.BuildNumber)
+
+        curl -d "{\"State\": 2, \"Message\": \"Pushing Helm chart to ACR...\", \"ServiceName\": \"mtcden\"}" -X POST $(report_url)
+        az acr helm push -n $(acr_name) mole-cloud-$(Build.BuildNumber).tgz
+
+  - script: |
+      curl -d "{\"State\": 5, \"Message\": \"Error Building Application\", \"ServiceName\": \"mtcden\"}" -X POST $(report_url)
+    condition: failed()
 
 
 # pool:
@@ -60,25 +81,9 @@ steps:
 #       - src/WhackAMole.KubeServices
 
 
-# jobs:
-# - job: Report Build Status - BuildingApplication
-#   server: true
+    webserviceEndpoint: 
 
-#   steps:
-#   - task: InvokeRESTAPI@1
-#     displayName: 'Report Build Status - BuildingApplication'
-#     inputs:
-#       serviceConnection: ReportBuildStatus
-#       headers: |
-#         {
-#           "content-type": "application/json"
-#         }
-#       body: |
-#         {
-#           "State": "BuildingApplication",
-#           "Message": "Acquiring build agent...",
-#           "ServiceName": "$(ServiceName)"
-#         }
+
 
 # - job: Build
 #   pool: ubuntu.
