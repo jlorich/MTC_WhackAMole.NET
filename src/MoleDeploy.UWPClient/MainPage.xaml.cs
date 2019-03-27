@@ -286,6 +286,7 @@ namespace MoleDeploy.UWPClient
                 _DeploymentTimer.Elapsed += OnDeploymentTimerElapsed;
                 _DeploymentTimer.AutoReset = false;
                 _DeploymentTimer.Enabled = true;
+                _DeploymentTimer.Start();
 
                 var colorString = Color.FromArgb(SelectedColor.A, SelectedColor.R, SelectedColor.G, SelectedColor.B).ToArgb().ToString("X8").Substring(2, 6);
 
