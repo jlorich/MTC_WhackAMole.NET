@@ -1,0 +1,11 @@
+**/bin/
+**/obj/
+**/out/
+**/TestResults/
+**/AppPackages/
+**/.vs/
+**/.vscode/
+./src/MoleDeploy.UWPClient
+./src/WhackAMole.UWPClient
+**/.terraform/
+**/.git
