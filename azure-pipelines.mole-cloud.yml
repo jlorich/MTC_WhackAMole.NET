@@ -21,6 +21,9 @@ pool:
   vmImage: 'ubuntu-16.04'
 
 steps:
+- script: |
+    curl -d "{\"State\": 1, \"Message\": \"Initializing Azure CLI Connection\", \"ServiceName\": \"mtcden\"}" -X POST $(report_url)
+
 - task: AzureCLI@1
   displayName: 'Azure CLI '
   inputs:
