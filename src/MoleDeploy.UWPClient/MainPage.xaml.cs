@@ -293,7 +293,7 @@ namespace MoleDeploy.UWPClient
                 var request = new SubmitBuildRequest()
                 {
                     PodColor = colorString,
-                    PodReplicaCount = SelectedReplicaCount,
+                    PodReplicaCount = SelectedReplicaCount.ToString(),
                     ServiceName = Settings.ServiceName
                 };
 
@@ -311,7 +311,7 @@ namespace MoleDeploy.UWPClient
 
         private async void OnDeploymentTimerElapsed(Object source, ElapsedEventArgs e)
         {
-            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
             {
                 _CurrentState = VstsBuildState.Unknown;
 

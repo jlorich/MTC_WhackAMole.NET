@@ -13,7 +13,7 @@ RUN dotnet publish ./WhackAMole.MoleCloud/WhackAMole.MoleCloud.csproj -c Debug -
 
 
 FROM microsoft/dotnet:aspnetcore-runtime
-ENV POD_COLOR=$pod_color
+ENV POD_COLOR=${pod_color}
 
 WORKDIR /app
 EXPOSE 8080
