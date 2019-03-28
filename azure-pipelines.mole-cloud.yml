@@ -30,7 +30,7 @@ steps:
   displayName: 'Update node count'
   inputs:
     PathToFile: 'charts/mole-cloud/values.yaml'
-    RegEx: 'repository:[.]*'
+    RegEx: 'replicas:[.]*'
     ValueToReplace: 'replicas: $(pod_replica_count)'
 
 # Update image repository in helm chart
@@ -38,7 +38,7 @@ steps:
   displayName: 'Update image repository'
   inputs:
     PathToFile: 'charts/mole-cloud/values.yaml'
-    RegEx: 'replicas:[\s]+([\d]+)'
+    RegEx: 'repository:[.]*'
     ValueToReplace: 'repository: $(repository)'
 
 # Update image tag in helm chart
