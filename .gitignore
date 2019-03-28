@@ -1,5 +1,5 @@
-MoleDeploy.Vsts/local.settings.json
-MoleDeploy.UWPClient/appsettings.json
+local.settings.json
+appsettings.json
 .terraform
 *.tfstate
 *.tfstate.backup

@@ -39,7 +39,7 @@ steps:
   inputs:
     PathToFile: 'charts/mole-cloud/values.yaml'
     RegEx: 'repository:.*'
-    ValueToReplace: 'repository: $(repository)'
+    ValueToReplace: 'repository: $(acr_name).azurecr.io/$(repository)'
 
 # Update image tag in helm chart
 - task: kasunkodagoda.regex-match-replace.regex-match-replace.RegExMatchReplace@2
@@ -48,6 +48,14 @@ steps:
     PathToFile: 'charts/mole-cloud/values.yaml'
     RegEx: 'tag:.*'
     ValueToReplace: 'tag: $(Build.BuildNumber)'
+
+# Update app name
+- task: kasunkodagoda.regex-match-replace.regex-match-replace.RegExMatchReplace@2
+  displayName: 'Update image tag'
+  inputs:
+    PathToFile: 'charts/mole-cloud/values.yaml'
+    RegEx: 'name:.*'
+    ValueToReplace: 'name: $(service_name)-mole-cloud'
 
 # Build, package and push
 - task: AzureCLI@1
@@ -58,19 +66,19 @@ steps:
     inlineScript: |
 
       # User ACR to build and tag our container
-      curl -d "{\"State\": 1, \"Message\": \"Executing Azure Container Registry Build...\", \"ServiceName\": \"mtcden\"}" -X POST $(report_url)
+      curl -d "{\"State\": 1, \"Message\": \"Executing Azure Container Registry Build...\", \"ServiceName\": \"$(service_name)\"}" -X POST $(report_url)
       az acr build -r $(acr_name) -t $(repository):$(tag) -f ./src/Dockerfile.MoleCloud --build-arg "pod_color=$(pod_color)" ./src
       
       # Package the helm chart and push it to ACR
-      curl -d "{\"State\": 2, \"Message\": \"Initializing Helm...\", \"ServiceName\": \"mtcden\"}" -X POST $(report_url)
+      curl -d "{\"State\": 2, \"Message\": \"Initializing Helm...\", \"ServiceName\": \"$(service_name)\"}" -X POST $(report_url)
       helm init --client-only
 
-      curl -d "{\"State\": 2, \"Message\": \"Packaging Helm Chart...\", \"ServiceName\": \"mtcden\"}" -X POST $(report_url)
+      curl -d "{\"State\": 2, \"Message\": \"Packaging Helm Chart...\", \"ServiceName\": \"$(service_name)\"}" -X POST $(report_url)
       helm package charts/mole-cloud --version $(Build.BuildNumber)
 
-      curl -d "{\"State\": 2, \"Message\": \"Pushing Helm chart to Azure Container Registry...\", \"ServiceName\": \"mtcden\"}" -X POST $(report_url)
+      curl -d "{\"State\": 2, \"Message\": \"Pushing Helm chart to Azure Container Registry...\", \"ServiceName\": \"$(service_name)\"}" -X POST $(report_url)
       az acr helm push -n $(acr_name) mole-cloud-$(Build.BuildNumber).tgz
 
 - script: |
-    curl -d "{\"State\": 5, \"Message\": \"Error Building Application\", \"ServiceName\": \"mtcden\"}" -X POST $(report_url)
+    curl -d "{\"State\": 5, \"Message\": \"Error Building Application\", \"ServiceName\": \"$(service_name)\"}" -X POST $(report_url)
   condition: failed()
