@@ -39,7 +39,7 @@ steps:
   inputs:
     PathToFile: 'charts/mole-cloud/values.yaml'
     RegEx: 'repository:.*'
-    ValueToReplace: 'repository: $(repository)'
+    ValueToReplace: 'repository: $(acr_name).azurecr.io/$(repository)'
 
 # Update image tag in helm chart
 - task: kasunkodagoda.regex-match-replace.regex-match-replace.RegExMatchReplace@2
