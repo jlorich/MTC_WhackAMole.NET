@@ -34,6 +34,6 @@ steps:
 
       # Build and push the container
       docker build -f ./src/Dockerfile.MoleCloud -t $(repository):$(tag) ./src
-      docker tag $(repository):$(tag) $(repository):$latest
+      docker tag $(repository):$(tag) $(repository):latest
       docker push $($(repository):$(tag)
       docker push $(repository):latest
