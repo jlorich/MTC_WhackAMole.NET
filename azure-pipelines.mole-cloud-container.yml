@@ -11,7 +11,7 @@ trigger:
       - src/WhackAMole.KubeServices
       - src/Dockerfile.MoleCloud
       - charts/mole-cloud
-      - azure-pipelines.mole-cloud.yml
+      - azure-pipelines.mole-cloud-container.yml
 
 variables:
   tag: $(Build.BuildNumber)
