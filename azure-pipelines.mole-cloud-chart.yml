@@ -34,15 +34,15 @@ steps:
   inputs:
     PathToFile: 'charts/mole-cloud/values.yaml'
     RegEx: 'tag:.*'
-    ValueToReplace: 'tag: "$(Build.BuildNumber)"'
+    ValueToReplace: 'tag: "latest"'
 
 # Update pod_color tag in helm chart
 - task: kasunkodagoda.regex-match-replace.regex-match-replace.RegExMatchReplace@2
   displayName: 'Update image tag'
   inputs:
     PathToFile: 'charts/mole-cloud/values.yaml'
-    RegEx: 'tag:.*'
-    ValueToReplace: 'tag: "$(Build.BuildNumber)"'
+    RegEx: 'pod_color:.*'
+    ValueToReplace: 'pod_color: "$(pod_color)"'
 
 # Build, package and push
 - task: AzureCLI@1
