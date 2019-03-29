@@ -4,3 +4,4 @@ image:
 app:
   name: mole-cloud
   replicas: 8
+pod_color: c0ffee

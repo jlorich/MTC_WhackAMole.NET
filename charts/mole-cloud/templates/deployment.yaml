@@ -16,6 +16,9 @@ spec:
       - name: {{.Values.app.name}}
         image: {{.Values.image.repository}}:{{.Values.image.tag}}
         imagePullPolicy: IfNotPresent
+        env:          
+          - name: "POD_COLOR"
+            value: {{.Values.pod_color}}
         ports:
         - containerPort: 8080
           protocol: TCP

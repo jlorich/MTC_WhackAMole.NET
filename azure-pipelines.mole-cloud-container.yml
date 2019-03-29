@@ -1,0 +1,39 @@
+name: $(Date:yyyyMMdd)$(Rev:.r)
+
+trigger:
+  branches: 
+    include:
+      - master
+      - feature/terraform
+  paths:
+    include:
+      - src/WhackAMole.MoleCloud
+      - src/WhackAMole.KubeServices
+      - src/Dockerfile.MoleCloud
+      - charts/mole-cloud
+      - azure-pipelines.mole-cloud.yml
+
+variables:
+  repository: whack-a-mole/mole-cloud
+  tag: $(Build.BuildNumber)
+  report_url: https://demo-whack-a-mole-dev-func.azurewebsites.net/api/ReportBuildState
+
+pool:
+  vmImage: 'ubuntu-16.04'
+
+steps:
+# Build, package and push
+- task: AzureCLI@1
+  displayName: 'Azure CLI '
+  inputs:
+    azureSubscription: 'MTC Denver Sandbox (b0e04a4a-a321-4b66-b8fd-13715262ba3c)'
+    scriptLocation: inlineScript
+    inlineScript: |
+      # log in to the container registry
+      az acr login -n $(acr_name)
+
+      # Build and push the container
+      docker build -f ./src/Dockerfile.MoleCloud -t $(repository):$(tag) ./src
+      docker tag $(repository):$(tag) $(repository):$latest
+      docker push $(repository):$(tag)
+      docker push $(repository):latest
