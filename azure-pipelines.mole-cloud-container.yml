@@ -14,9 +14,9 @@ trigger:
       - azure-pipelines.mole-cloud.yml
 
 variables:
-  repository: whack-a-mole/mole-cloud
   tag: $(Build.BuildNumber)
-  report_url: https://demo-whack-a-mole-dev-func.azurewebsites.net/api/ReportBuildState
+  registry: $(acr_name).azurecr.io
+  repository: $(registry)/whack-a-mole/mole-cloud
 
 pool:
   vmImage: 'ubuntu-16.04'
@@ -35,5 +35,5 @@ steps:
       # Build and push the container
       docker build -f ./src/Dockerfile.MoleCloud -t $(repository):$(tag) ./src
       docker tag $(repository):$(tag) $(repository):$latest
-      docker push $(repository):$(tag)
+      docker push $($(repository):$(tag)
       docker push $(repository):latest
