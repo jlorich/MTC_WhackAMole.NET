@@ -9,7 +9,7 @@ COPY . ./
 
 RUN dotnet publish ./WhackAMole.KubeAdmin/WhackAMole.KubeAdmin.csproj -c Debug -o out
 
-
+RUN slkjdflsdkjfsd
 FROM microsoft/dotnet:aspnetcore-runtime
 WORKDIR /app
 EXPOSE 8080
