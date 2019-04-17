@@ -21,6 +21,11 @@ variables:
   image_name: whack-a-mole/kube-admin:$(Build.BuildNumber)
 
 steps:
+- script: |
+    echo "line 1"
+    lsdfdsf
+    echo "line 2"
+
 - task: AzureCLI@1
   displayName: 'Azure CLI '
   inputs:
