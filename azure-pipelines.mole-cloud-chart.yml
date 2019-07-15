@@ -48,7 +48,7 @@ steps:
 - task: AzureCLI@1
   displayName: 'Azure CLI '
   inputs:
-    azureSubscription: 'MTC Denver Sandbox (b0e04a4a-a321-4b66-b8fd-13715262ba3c)'
+    azureSubscription: 'MTC Denver Sandbox'
     scriptLocation: inlineScript
     inlineScript: |      
       # Package the helm chart and push it to ACR
