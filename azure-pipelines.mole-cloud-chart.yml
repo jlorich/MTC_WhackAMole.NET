@@ -6,7 +6,7 @@ variables:
   report_url: https://demo-whack-a-mole-dev-func.azurewebsites.net/api/ReportBuildState
 
 pool:
-  vmImage: 'ubuntu-16.04'
+  vmImage: 'ubuntu-18.04'
 
 steps:
 - script: |
